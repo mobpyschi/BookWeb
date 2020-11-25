@@ -1,0 +1,130 @@
+﻿@using Project_BookStoreCT.Models.ViewModels;
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Login V3</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--===============================================================================================-->
+    <link rel="icon" type="image/png" href="~/AdminStyles/Login/images/icons/favicon.ico" />
+    <!--===============================================================================================-->
+    <link href="~/css/bootstrap.min.css" rel="stylesheet" />
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/AdminStyles/Login/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/AdminStyles/Login/fonts/iconic/css/material-design-iconic-font.min.css">
+    <!--===============================================================================================-->
+    <link href="~/css/animate.css" rel="stylesheet" />
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/AdminStyles/Login/vendor/css-hamburgers/hamburgers.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/AdminStyles/Login/vendor/animsition/css/animsition.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/AdminStyles/Login/vendor/select2/select2.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/AdminStyles/Login/vendor/daterangepicker/daterangepicker.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/AdminStyles/Login/css/util.css">
+    <link rel="stylesheet" type="text/css" href="~/AdminStyles/Login/css/main.css">
+    <!--===============================================================================================-->
+    <script src="~/Scripts/jquery-3.5.1.js"></script>
+    <script src="~/Scripts/jquery-3.5.1.min.js"></script>
+</head>
+<body>
+
+    <div class="limiter">
+        <div class="container-login100" style="background-image: url('../../AdminStyles/Login/images/bg-01.jpg');">
+            <div class="wrap-login100">
+                @*<form class="login100-form validate-form">*@
+                <span class="login100-form-logo">
+                    <i class="zmdi zmdi-landscape"></i>
+                </span>
+
+                <span class="login100-form-title p-b-34 p-t-27">
+                    Log in
+                </span>
+
+                <div class="wrap-input100 validate-input" data-validate="Enter email">
+                    <input class="input100" type="email" name="email" id="email" placeholder="Email">
+                    <span class="focus-input100" data-placeholder="&#xf207;"></span>
+                </div>
+
+                <div class="wrap-input100 validate-input" data-validate="Enter password">
+                    <input class="input100" type="password" id="password" name="pass" placeholder="Password">
+                    <span class="focus-input100" data-placeholder="&#xf191;"></span>
+                </div>
+
+                <div class="contact100-form-checkbox">
+                    <input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
+                    <label class="label-checkbox100" for="ckb1">
+                        Remember me
+                    </label>
+                </div>
+                <div class="container-login100-form-btn">
+                    <button class="login100-form-btn" onclick="eventLogin()">
+                        Login
+                    </button>
+                </div>
+
+                <div class="text-center p-t-90">
+                    <a class="txt1" href="#">
+                        Forgot Password?
+                    </a>
+                    <br />
+                    <a class="txt1" onclick="window.open(this.href); return false;" onkeypress="window.open(this.href); return false;" href="https://www.facebook.com/PNH2000">
+                        Dev by Pham Ngoc Hai
+                    </a>
+                </div>
+                @*</form>*@
+            </div>
+        </div>
+    </div>
+
+
+    <div id="dropDownSelect1"></div>
+
+    <!--===============================================================================================-->
+    <script src="~/AdminStyles/Login/vendor/jquery/jquery-3.2.1.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/AdminStyles/Login/vendor/animsition/js/animsition.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/Scripts/popper.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/AdminStyles/Login/vendor/select2/select2.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/AdminStyles/Login/vendor/daterangepicker/moment.min.js"></script>
+    <script src="~/AdminStyles/Login/vendor/daterangepicker/daterangepicker.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/AdminStyles/Login/vendor/countdowntime/countdowntime.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/AdminStyles/Login/js/main.js"></script>
+    <script type="text/javascript">
+        function eventLogin() {
+            $.ajax({
+                url: "/Admin/Login",
+                method: "POST",
+                data: {
+                    'email': $("#email").val(),
+                    'password': $("#password").val(),
+                    'rememberMe': $("#ckb1").is(':checked'),
+                }
+            }).done(function (data) {
+                if (data._mess == 1) {
+                    alert("Đăng nhập thành công")
+                    location.href = '/Admin/Index'
+                }
+                else {
+                    if (data._mess == 0) {
+                        alert("Đăng nhập thất bại")
+                    }
+                }
+            })
+        }
+    </script>
+</body>
+</html>

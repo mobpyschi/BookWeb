@@ -1,0 +1,82 @@
+﻿@using Project_BookStoreCT.Models.ViewModels;
+@{
+    ViewBag.Title = "DetailBills";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="page-header card">
+    <div class="row align-items-end">
+        <div class="col-lg-8">
+            <div class="page-header-title">
+                <i class="feather icon-home bg-c-blue"></i>
+                <div class="d-inline">
+                    <h5>Admin</h5>
+                    <span>Manager</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="page-header-breadcrumb">
+                <ul class=" breadcrumb breadcrumb-title">
+                    <li class="breadcrumb-item">
+                        <a href="index.html"><i class="feather icon-home"></i></a>
+                    </li>
+                    <li class="breadcrumb-item"><a href="#!">Danh sách đơn hàng</a> </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="pcoded-inner-content">
+    <div class="main-body">
+        <div class="page-wrapper">
+            <div class="page-body">
+                <div class="col-md-12">
+                    <div class="card table-card">
+                        <div class="card-header">
+                            <h5>Danh sách đơn hàng</h5>
+                            <div class="card-header-right">
+                                <ul class="list-unstyled card-option">
+                                    <li class="first-opt"><i class="feather icon-chevron-left open-card-option"></i></li>
+                                    <li><i class="feather icon-maximize full-card"></i></li>
+                                    <li><i class="feather icon-minus minimize-card"></i></li>
+                                    <li><i class="feather icon-chevron-left open-card-option"></i></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-block p-b-0">                      
+                            <div class="table-responsive">
+                                <table id="dtBasicExample" class="table table-hover m-b-0 table-striped table-bordered table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th>Tên sách</th>
+                                            <th>Loại sách</th>
+                                            <th>Hình ảnh</th>
+                                            <th>Số lượng</th>
+                                            <th>Giá</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (DetailBills_ViewModels d in Model)
+                                        {
+                                            <tr>
+                                                <td>@d.bookName</td>
+                                                <td>@d.</td>
+                                                <td><img src="~/imgs/@d.image" style="width:75px;height:100px;"/></td>
+                                                <td>@d.quantity</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                                <a href="~/Admin/BillsIndex" class="btn btn-primary">Trở về</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+

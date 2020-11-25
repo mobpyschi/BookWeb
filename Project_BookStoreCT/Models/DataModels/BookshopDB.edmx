@@ -1,0 +1,901 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="BookshopModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Author">
+          <Key>
+            <PropertyRef Name="Author_ID" />
+          </Key>
+          <Property Name="Author_ID" Type="int" Nullable="false" />
+          <Property Name="authorName" Type="nvarchar" MaxLength="150" />
+          <Property Name="description" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Authors_Books">
+          <Key>
+            <PropertyRef Name="Author_ID" />
+            <PropertyRef Name="Book_ID" />
+          </Key>
+          <Property Name="Author_ID" Type="int" Nullable="false" />
+          <Property Name="Book_ID" Type="int" Nullable="false" />
+          <Property Name="bookRole" Type="varchar" MaxLength="150" />
+        </EntityType>
+        <EntityType Name="Bill">
+          <Key>
+            <PropertyRef Name="Bill_ID" />
+          </Key>
+          <Property Name="Bill_ID" Type="int" Nullable="false" />
+          <Property Name="date_set" Type="datetime" />
+          <Property Name="customerName" Type="nvarchar" MaxLength="150" />
+          <Property Name="customerAddress" Type="nvarchar" MaxLength="150" />
+          <Property Name="phoneNumber" Type="nchar" MaxLength="10" />
+          <Property Name="isPayment" Type="bit" />
+          <Property Name="isDelivered" Type="bit" />
+          <Property Name="delivery_date" Type="datetime" />
+          <Property Name="total" Type="int" />
+        </EntityType>
+        <EntityType Name="Book">
+          <Key>
+            <PropertyRef Name="Book_ID" />
+          </Key>
+          <Property Name="Book_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="isbn" Type="varchar(max)" />
+          <Property Name="bookName" Type="nvarchar" MaxLength="200" />
+          <Property Name="description" Type="nvarchar(max)" />
+          <Property Name="price" Type="float" />
+          <Property Name="image" Type="varchar" MaxLength="200" />
+          <Property Name="quantityExists" Type="int" />
+          <Property Name="sellNumber" Type="int" />
+          <Property Name="saleOffPrice" Type="float" />
+          <Property Name="statusSaleOff" Type="bit" />
+          <Property Name="category_id" Type="int" />
+          <Property Name="language_id" Type="int" />
+          <Property Name="supplier_id" Type="int" />
+          <Property Name="star" Type="int" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="Category_ID" />
+          </Key>
+          <Property Name="Category_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="categoryName" Type="nvarchar" MaxLength="150" />
+          <Property Name="categoryNameForeign" Type="nvarchar" MaxLength="150" />
+          <Property Name="theme_id" Type="int" />
+          <Property Name="ThemeForeign_id" Type="int" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="Customer_ID" />
+          </Key>
+          <Property Name="Customer_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="customerName" Type="nvarchar" MaxLength="100" />
+          <Property Name="password" Type="varchar(max)" />
+          <Property Name="avatar" Type="varchar" MaxLength="500" />
+          <Property Name="customerEmail" Type="varchar" MaxLength="150" />
+          <Property Name="customerPhone" Type="varchar" MaxLength="100" />
+          <Property Name="customerAddress" Type="nvarchar" MaxLength="100" />
+          <Property Name="sex" Type="bit" />
+          <Property Name="dayOfBirth" Type="datetime" />
+          <Property Name="role" Type="int" />
+        </EntityType>
+        <EntityType Name="DetailBill">
+          <Key>
+            <PropertyRef Name="Bill_ID" />
+            <PropertyRef Name="Book_ID" />
+          </Key>
+          <Property Name="Bill_ID" Type="int" Nullable="false" />
+          <Property Name="Book_ID" Type="int" Nullable="false" />
+          <Property Name="quantity" Type="int" />
+        </EntityType>
+        <EntityType Name="Language">
+          <Key>
+            <PropertyRef Name="Language_ID" />
+          </Key>
+          <Property Name="Language_ID" Type="int" Nullable="false" />
+          <Property Name="languageName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Promotion">
+          <Key>
+            <PropertyRef Name="Promotion_ID" />
+          </Key>
+          <Property Name="Promotion_ID" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="date_from" Type="datetime" />
+          <Property Name="date_to" Type="datetime" />
+          <Property Name="contentPromotion" Type="ntext" />
+          <Property Name="percentPromotion" Type="int" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Role_ID" />
+          </Key>
+          <Property Name="Role_ID" Type="int" Nullable="false" />
+          <Property Name="roleName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Supplier">
+          <Key>
+            <PropertyRef Name="Supplier_ID" />
+          </Key>
+          <Property Name="Supplier_ID" Type="int" Nullable="false" />
+          <Property Name="supplierName" Type="nvarchar" MaxLength="150" />
+          <Property Name="description" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Theme">
+          <Key>
+            <PropertyRef Name="Theme_ID" />
+          </Key>
+          <Property Name="Theme_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="themeName" Type="nvarchar" MaxLength="50" />
+          <Property Name="description" Type="ntext" />
+        </EntityType>
+        <EntityType Name="ThemeForeign">
+          <Key>
+            <PropertyRef Name="ThemeForeign_ID" />
+          </Key>
+          <Property Name="ThemeForeign_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ThemeForeignName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Decription" Type="ntext" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="User_ID" />
+          </Key>
+          <Property Name="User_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userName" Type="nvarchar" MaxLength="100" />
+          <Property Name="password" Type="varchar(max)" />
+          <Property Name="avatar" Type="varchar" MaxLength="500" />
+          <Property Name="email" Type="varchar" MaxLength="150" />
+          <Property Name="phoneNumber" Type="varchar" MaxLength="10" />
+          <Property Name="address" Type="nvarchar" MaxLength="150" />
+          <Property Name="sex" Type="bit" />
+          <Property Name="dayOfBirth" Type="datetime" />
+          <Property Name="role" Type="int" />
+        </EntityType>
+        <Association Name="FK_Authors_Books_Author">
+          <End Role="Author" Type="Self.Author" Multiplicity="1" />
+          <End Role="Authors_Books" Type="Self.Authors_Books" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Author">
+              <PropertyRef Name="Author_ID" />
+            </Principal>
+            <Dependent Role="Authors_Books">
+              <PropertyRef Name="Author_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AuthorsBooks_Book">
+          <End Role="Book" Type="Self.Book" Multiplicity="1" />
+          <End Role="Authors_Books" Type="Self.Authors_Books" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Book">
+              <PropertyRef Name="Book_ID" />
+            </Principal>
+            <Dependent Role="Authors_Books">
+              <PropertyRef Name="Book_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Book_category">
+          <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
+          <End Role="Book" Type="Self.Book" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Category_ID" />
+            </Principal>
+            <Dependent Role="Book">
+              <PropertyRef Name="category_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Book_language">
+          <End Role="Language" Type="Self.Language" Multiplicity="0..1" />
+          <End Role="Book" Type="Self.Book" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Language">
+              <PropertyRef Name="Language_ID" />
+            </Principal>
+            <Dependent Role="Book">
+              <PropertyRef Name="language_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Book_supplier">
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="0..1" />
+          <End Role="Book" Type="Self.Book" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="Supplier_ID" />
+            </Principal>
+            <Dependent Role="Book">
+              <PropertyRef Name="supplier_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Category_Theme">
+          <End Role="Theme" Type="Self.Theme" Multiplicity="0..1" />
+          <End Role="Category" Type="Self.Category" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Theme">
+              <PropertyRef Name="Theme_ID" />
+            </Principal>
+            <Dependent Role="Category">
+              <PropertyRef Name="theme_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Category_ThemeForeign">
+          <End Role="ThemeForeign" Type="Self.ThemeForeign" Multiplicity="0..1" />
+          <End Role="Category" Type="Self.Category" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ThemeForeign">
+              <PropertyRef Name="ThemeForeign_ID" />
+            </Principal>
+            <Dependent Role="Category">
+              <PropertyRef Name="ThemeForeign_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Customer_role">
+          <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
+          <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Role_ID" />
+            </Principal>
+            <Dependent Role="Customer">
+              <PropertyRef Name="role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DetailBill_Bill">
+          <End Role="Bill" Type="Self.Bill" Multiplicity="1" />
+          <End Role="DetailBill" Type="Self.DetailBill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bill">
+              <PropertyRef Name="Bill_ID" />
+            </Principal>
+            <Dependent Role="DetailBill">
+              <PropertyRef Name="Bill_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DetailBill_Book">
+          <End Role="Book" Type="Self.Book" Multiplicity="1" />
+          <End Role="DetailBill" Type="Self.DetailBill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Book">
+              <PropertyRef Name="Book_ID" />
+            </Principal>
+            <Dependent Role="DetailBill">
+              <PropertyRef Name="Book_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_role">
+          <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Role_ID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BookshopModelStoreContainer">
+          <EntitySet Name="Author" EntityType="Self.Author" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Authors_Books" EntityType="Self.Authors_Books" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Bill" EntityType="Self.Bill" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Book" EntityType="Self.Book" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DetailBill" EntityType="Self.DetailBill" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Language" EntityType="Self.Language" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Promotion" EntityType="Self.Promotion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Supplier" EntityType="Self.Supplier" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Theme" EntityType="Self.Theme" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ThemeForeign" EntityType="Self.ThemeForeign" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Authors_Books_Author" Association="Self.FK_Authors_Books_Author">
+            <End Role="Author" EntitySet="Author" />
+            <End Role="Authors_Books" EntitySet="Authors_Books" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AuthorsBooks_Book" Association="Self.FK_AuthorsBooks_Book">
+            <End Role="Book" EntitySet="Book" />
+            <End Role="Authors_Books" EntitySet="Authors_Books" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Book_category" Association="Self.FK_Book_category">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Book" EntitySet="Book" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Book_language" Association="Self.FK_Book_language">
+            <End Role="Language" EntitySet="Language" />
+            <End Role="Book" EntitySet="Book" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Book_supplier" Association="Self.FK_Book_supplier">
+            <End Role="Supplier" EntitySet="Supplier" />
+            <End Role="Book" EntitySet="Book" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Category_Theme" Association="Self.FK_Category_Theme">
+            <End Role="Theme" EntitySet="Theme" />
+            <End Role="Category" EntitySet="Category" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Category_ThemeForeign" Association="Self.FK_Category_ThemeForeign">
+            <End Role="ThemeForeign" EntitySet="ThemeForeign" />
+            <End Role="Category" EntitySet="Category" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Customer_role" Association="Self.FK_Customer_role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="Customer" EntitySet="Customer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DetailBill_Bill" Association="Self.FK_DetailBill_Bill">
+            <End Role="Bill" EntitySet="Bill" />
+            <End Role="DetailBill" EntitySet="DetailBill" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DetailBill_Book" Association="Self.FK_DetailBill_Book">
+            <End Role="Book" EntitySet="Book" />
+            <End Role="DetailBill" EntitySet="DetailBill" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_role" Association="Self.FK_User_role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BookshopModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Author">
+          <Key>
+            <PropertyRef Name="Author_ID" />
+          </Key>
+          <Property Name="Author_ID" Type="Int32" Nullable="false" />
+          <Property Name="authorName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Authors_Books" Relationship="Self.FK_Authors_Books_Author" FromRole="Author" ToRole="Authors_Books" />
+        </EntityType>
+        <EntityType Name="Authors_Books">
+          <Key>
+            <PropertyRef Name="Author_ID" />
+            <PropertyRef Name="Book_ID" />
+          </Key>
+          <Property Name="Author_ID" Type="Int32" Nullable="false" />
+          <Property Name="Book_ID" Type="Int32" Nullable="false" />
+          <Property Name="bookRole" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Author" Relationship="Self.FK_Authors_Books_Author" FromRole="Authors_Books" ToRole="Author" />
+          <NavigationProperty Name="Book" Relationship="Self.FK_AuthorsBooks_Book" FromRole="Authors_Books" ToRole="Book" />
+        </EntityType>
+        <EntityType Name="Bill">
+          <Key>
+            <PropertyRef Name="Bill_ID" />
+          </Key>
+          <Property Name="Bill_ID" Type="Int32" Nullable="false" />
+          <Property Name="date_set" Type="DateTime" Precision="3" />
+          <Property Name="customerName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="customerAddress" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="phoneNumber" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="isPayment" Type="Boolean" />
+          <Property Name="isDelivered" Type="Boolean" />
+          <Property Name="delivery_date" Type="DateTime" Precision="3" />
+          <Property Name="total" Type="Int32" />
+          <NavigationProperty Name="DetailBills" Relationship="Self.FK_DetailBill_Bill" FromRole="Bill" ToRole="DetailBill" />
+        </EntityType>
+        <EntityType Name="Book">
+          <Key>
+            <PropertyRef Name="Book_ID" />
+          </Key>
+          <Property Name="Book_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="isbn" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="bookName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="price" Type="Double" />
+          <Property Name="image" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="quantityExists" Type="Int32" />
+          <Property Name="sellNumber" Type="Int32" />
+          <Property Name="saleOffPrice" Type="Double" />
+          <Property Name="statusSaleOff" Type="Boolean" />
+          <Property Name="category_id" Type="Int32" />
+          <Property Name="language_id" Type="Int32" />
+          <Property Name="supplier_id" Type="Int32" />
+          <Property Name="star" Type="Int32" />
+          <NavigationProperty Name="Authors_Books" Relationship="Self.FK_AuthorsBooks_Book" FromRole="Book" ToRole="Authors_Books" />
+          <NavigationProperty Name="Category" Relationship="Self.FK_Book_category" FromRole="Book" ToRole="Category" />
+          <NavigationProperty Name="Language" Relationship="Self.FK_Book_language" FromRole="Book" ToRole="Language" />
+          <NavigationProperty Name="Supplier" Relationship="Self.FK_Book_supplier" FromRole="Book" ToRole="Supplier" />
+          <NavigationProperty Name="DetailBills" Relationship="Self.FK_DetailBill_Book" FromRole="Book" ToRole="DetailBill" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="Category_ID" />
+          </Key>
+          <Property Name="Category_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="categoryName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="categoryNameForeign" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="theme_id" Type="Int32" />
+          <Property Name="ThemeForeign_id" Type="Int32" />
+          <NavigationProperty Name="Books" Relationship="Self.FK_Book_category" FromRole="Category" ToRole="Book" />
+          <NavigationProperty Name="Theme" Relationship="Self.FK_Category_Theme" FromRole="Category" ToRole="Theme" />
+          <NavigationProperty Name="ThemeForeign" Relationship="Self.FK_Category_ThemeForeign" FromRole="Category" ToRole="ThemeForeign" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="Customer_ID" />
+          </Key>
+          <Property Name="Customer_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="customerName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="password" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="avatar" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="customerEmail" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="customerPhone" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="customerAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="sex" Type="Boolean" />
+          <Property Name="dayOfBirth" Type="DateTime" Precision="3" />
+          <Property Name="role" Type="Int32" />
+          <NavigationProperty Name="Role1" Relationship="Self.FK_Customer_role" FromRole="Customer" ToRole="Role" />
+        </EntityType>
+        <EntityType Name="DetailBill">
+          <Key>
+            <PropertyRef Name="Bill_ID" />
+            <PropertyRef Name="Book_ID" />
+          </Key>
+          <Property Name="Bill_ID" Type="Int32" Nullable="false" />
+          <Property Name="Book_ID" Type="Int32" Nullable="false" />
+          <Property Name="quantity" Type="Int32" />
+          <NavigationProperty Name="Bill" Relationship="Self.FK_DetailBill_Bill" FromRole="DetailBill" ToRole="Bill" />
+          <NavigationProperty Name="Book" Relationship="Self.FK_DetailBill_Book" FromRole="DetailBill" ToRole="Book" />
+        </EntityType>
+        <EntityType Name="Language">
+          <Key>
+            <PropertyRef Name="Language_ID" />
+          </Key>
+          <Property Name="Language_ID" Type="Int32" Nullable="false" />
+          <Property Name="languageName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Books" Relationship="Self.FK_Book_language" FromRole="Language" ToRole="Book" />
+        </EntityType>
+        <EntityType Name="Promotion">
+          <Key>
+            <PropertyRef Name="Promotion_ID" />
+          </Key>
+          <Property Name="Promotion_ID" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="date_from" Type="DateTime" Precision="3" />
+          <Property Name="date_to" Type="DateTime" Precision="3" />
+          <Property Name="contentPromotion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="percentPromotion" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Role_ID" />
+          </Key>
+          <Property Name="Role_ID" Type="Int32" Nullable="false" />
+          <Property Name="roleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Customers" Relationship="Self.FK_Customer_role" FromRole="Role" ToRole="Customer" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_User_role" FromRole="Role" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Supplier">
+          <Key>
+            <PropertyRef Name="Supplier_ID" />
+          </Key>
+          <Property Name="Supplier_ID" Type="Int32" Nullable="false" />
+          <Property Name="supplierName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Books" Relationship="Self.FK_Book_supplier" FromRole="Supplier" ToRole="Book" />
+        </EntityType>
+        <EntityType Name="Theme">
+          <Key>
+            <PropertyRef Name="Theme_ID" />
+          </Key>
+          <Property Name="Theme_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="themeName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Categories" Relationship="Self.FK_Category_Theme" FromRole="Theme" ToRole="Category" />
+        </EntityType>
+        <EntityType Name="ThemeForeign">
+          <Key>
+            <PropertyRef Name="ThemeForeign_ID" />
+          </Key>
+          <Property Name="ThemeForeign_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ThemeForeignName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Decription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Categories" Relationship="Self.FK_Category_ThemeForeign" FromRole="ThemeForeign" ToRole="Category" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="User_ID" />
+          </Key>
+          <Property Name="User_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="password" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="avatar" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="phoneNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="address" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="sex" Type="Boolean" />
+          <Property Name="dayOfBirth" Type="DateTime" Precision="3" />
+          <Property Name="role" Type="Int32" />
+          <NavigationProperty Name="Role1" Relationship="Self.FK_User_role" FromRole="User" ToRole="Role" />
+        </EntityType>
+        <Association Name="FK_Authors_Books_Author">
+          <End Role="Author" Type="Self.Author" Multiplicity="1" />
+          <End Role="Authors_Books" Type="Self.Authors_Books" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Author">
+              <PropertyRef Name="Author_ID" />
+            </Principal>
+            <Dependent Role="Authors_Books">
+              <PropertyRef Name="Author_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AuthorsBooks_Book">
+          <End Role="Book" Type="Self.Book" Multiplicity="1" />
+          <End Role="Authors_Books" Type="Self.Authors_Books" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Book">
+              <PropertyRef Name="Book_ID" />
+            </Principal>
+            <Dependent Role="Authors_Books">
+              <PropertyRef Name="Book_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DetailBill_Bill">
+          <End Role="Bill" Type="Self.Bill" Multiplicity="1" />
+          <End Role="DetailBill" Type="Self.DetailBill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bill">
+              <PropertyRef Name="Bill_ID" />
+            </Principal>
+            <Dependent Role="DetailBill">
+              <PropertyRef Name="Bill_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Book_category">
+          <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
+          <End Role="Book" Type="Self.Book" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Category_ID" />
+            </Principal>
+            <Dependent Role="Book">
+              <PropertyRef Name="category_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Book_language">
+          <End Role="Language" Type="Self.Language" Multiplicity="0..1" />
+          <End Role="Book" Type="Self.Book" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Language">
+              <PropertyRef Name="Language_ID" />
+            </Principal>
+            <Dependent Role="Book">
+              <PropertyRef Name="language_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Book_supplier">
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="0..1" />
+          <End Role="Book" Type="Self.Book" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="Supplier_ID" />
+            </Principal>
+            <Dependent Role="Book">
+              <PropertyRef Name="supplier_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DetailBill_Book">
+          <End Role="Book" Type="Self.Book" Multiplicity="1" />
+          <End Role="DetailBill" Type="Self.DetailBill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Book">
+              <PropertyRef Name="Book_ID" />
+            </Principal>
+            <Dependent Role="DetailBill">
+              <PropertyRef Name="Book_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Category_Theme">
+          <End Role="Theme" Type="Self.Theme" Multiplicity="0..1" />
+          <End Role="Category" Type="Self.Category" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Theme">
+              <PropertyRef Name="Theme_ID" />
+            </Principal>
+            <Dependent Role="Category">
+              <PropertyRef Name="theme_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Category_ThemeForeign">
+          <End Role="ThemeForeign" Type="Self.ThemeForeign" Multiplicity="0..1" />
+          <End Role="Category" Type="Self.Category" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ThemeForeign">
+              <PropertyRef Name="ThemeForeign_ID" />
+            </Principal>
+            <Dependent Role="Category">
+              <PropertyRef Name="ThemeForeign_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Customer_role">
+          <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
+          <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Role_ID" />
+            </Principal>
+            <Dependent Role="Customer">
+              <PropertyRef Name="role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_role">
+          <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Role_ID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DataContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Authors" EntityType="Self.Author" />
+          <EntitySet Name="Authors_Books" EntityType="Self.Authors_Books" />
+          <EntitySet Name="Bills" EntityType="Self.Bill" />
+          <EntitySet Name="Books" EntityType="Self.Book" />
+          <EntitySet Name="Categories" EntityType="Self.Category" />
+          <EntitySet Name="Customers" EntityType="Self.Customer" />
+          <EntitySet Name="DetailBills" EntityType="Self.DetailBill" />
+          <EntitySet Name="Languages" EntityType="Self.Language" />
+          <EntitySet Name="Promotions" EntityType="Self.Promotion" />
+          <EntitySet Name="Roles" EntityType="Self.Role" />
+          <EntitySet Name="Suppliers" EntityType="Self.Supplier" />
+          <EntitySet Name="Themes" EntityType="Self.Theme" />
+          <EntitySet Name="ThemeForeigns" EntityType="Self.ThemeForeign" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="FK_Authors_Books_Author" Association="Self.FK_Authors_Books_Author">
+            <End Role="Author" EntitySet="Authors" />
+            <End Role="Authors_Books" EntitySet="Authors_Books" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AuthorsBooks_Book" Association="Self.FK_AuthorsBooks_Book">
+            <End Role="Book" EntitySet="Books" />
+            <End Role="Authors_Books" EntitySet="Authors_Books" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DetailBill_Bill" Association="Self.FK_DetailBill_Bill">
+            <End Role="Bill" EntitySet="Bills" />
+            <End Role="DetailBill" EntitySet="DetailBills" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Book_category" Association="Self.FK_Book_category">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="Book" EntitySet="Books" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Book_language" Association="Self.FK_Book_language">
+            <End Role="Language" EntitySet="Languages" />
+            <End Role="Book" EntitySet="Books" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Book_supplier" Association="Self.FK_Book_supplier">
+            <End Role="Supplier" EntitySet="Suppliers" />
+            <End Role="Book" EntitySet="Books" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DetailBill_Book" Association="Self.FK_DetailBill_Book">
+            <End Role="Book" EntitySet="Books" />
+            <End Role="DetailBill" EntitySet="DetailBills" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Category_Theme" Association="Self.FK_Category_Theme">
+            <End Role="Theme" EntitySet="Themes" />
+            <End Role="Category" EntitySet="Categories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Category_ThemeForeign" Association="Self.FK_Category_ThemeForeign">
+            <End Role="ThemeForeign" EntitySet="ThemeForeigns" />
+            <End Role="Category" EntitySet="Categories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Customer_role" Association="Self.FK_Customer_role">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="Customer" EntitySet="Customers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_role" Association="Self.FK_User_role">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BookshopModelStoreContainer" CdmEntityContainer="DataContext">
+          <EntitySetMapping Name="Authors">
+            <EntityTypeMapping TypeName="BookshopModel.Author">
+              <MappingFragment StoreEntitySet="Author">
+                <ScalarProperty Name="Author_ID" ColumnName="Author_ID" />
+                <ScalarProperty Name="authorName" ColumnName="authorName" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Authors_Books">
+            <EntityTypeMapping TypeName="BookshopModel.Authors_Books">
+              <MappingFragment StoreEntitySet="Authors_Books">
+                <ScalarProperty Name="Author_ID" ColumnName="Author_ID" />
+                <ScalarProperty Name="Book_ID" ColumnName="Book_ID" />
+                <ScalarProperty Name="bookRole" ColumnName="bookRole" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Bills">
+            <EntityTypeMapping TypeName="BookshopModel.Bill">
+              <MappingFragment StoreEntitySet="Bill">
+                <ScalarProperty Name="Bill_ID" ColumnName="Bill_ID" />
+                <ScalarProperty Name="date_set" ColumnName="date_set" />
+                <ScalarProperty Name="customerName" ColumnName="customerName" />
+                <ScalarProperty Name="customerAddress" ColumnName="customerAddress" />
+                <ScalarProperty Name="phoneNumber" ColumnName="phoneNumber" />
+                <ScalarProperty Name="isPayment" ColumnName="isPayment" />
+                <ScalarProperty Name="isDelivered" ColumnName="isDelivered" />
+                <ScalarProperty Name="delivery_date" ColumnName="delivery_date" />
+                <ScalarProperty Name="total" ColumnName="total" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Books">
+            <EntityTypeMapping TypeName="BookshopModel.Book">
+              <MappingFragment StoreEntitySet="Book">
+                <ScalarProperty Name="Book_ID" ColumnName="Book_ID" />
+                <ScalarProperty Name="isbn" ColumnName="isbn" />
+                <ScalarProperty Name="bookName" ColumnName="bookName" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="quantityExists" ColumnName="quantityExists" />
+                <ScalarProperty Name="sellNumber" ColumnName="sellNumber" />
+                <ScalarProperty Name="saleOffPrice" ColumnName="saleOffPrice" />
+                <ScalarProperty Name="statusSaleOff" ColumnName="statusSaleOff" />
+                <ScalarProperty Name="category_id" ColumnName="category_id" />
+                <ScalarProperty Name="language_id" ColumnName="language_id" />
+                <ScalarProperty Name="supplier_id" ColumnName="supplier_id" />
+                <ScalarProperty Name="star" ColumnName="star" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="BookshopModel.Category">
+              <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="Category_ID" ColumnName="Category_ID" />
+                <ScalarProperty Name="categoryName" ColumnName="categoryName" />
+                <ScalarProperty Name="categoryNameForeign" ColumnName="categoryNameForeign" />
+                <ScalarProperty Name="theme_id" ColumnName="theme_id" />
+                <ScalarProperty Name="ThemeForeign_id" ColumnName="ThemeForeign_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="BookshopModel.Customer">
+              <MappingFragment StoreEntitySet="Customer">
+                <ScalarProperty Name="Customer_ID" ColumnName="Customer_ID" />
+                <ScalarProperty Name="customerName" ColumnName="customerName" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="avatar" ColumnName="avatar" />
+                <ScalarProperty Name="customerEmail" ColumnName="customerEmail" />
+                <ScalarProperty Name="customerPhone" ColumnName="customerPhone" />
+                <ScalarProperty Name="customerAddress" ColumnName="customerAddress" />
+                <ScalarProperty Name="sex" ColumnName="sex" />
+                <ScalarProperty Name="dayOfBirth" ColumnName="dayOfBirth" />
+                <ScalarProperty Name="role" ColumnName="role" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DetailBills">
+            <EntityTypeMapping TypeName="BookshopModel.DetailBill">
+              <MappingFragment StoreEntitySet="DetailBill">
+                <ScalarProperty Name="Bill_ID" ColumnName="Bill_ID" />
+                <ScalarProperty Name="Book_ID" ColumnName="Book_ID" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Languages">
+            <EntityTypeMapping TypeName="BookshopModel.Language">
+              <MappingFragment StoreEntitySet="Language">
+                <ScalarProperty Name="Language_ID" ColumnName="Language_ID" />
+                <ScalarProperty Name="languageName" ColumnName="languageName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Promotions">
+            <EntityTypeMapping TypeName="BookshopModel.Promotion">
+              <MappingFragment StoreEntitySet="Promotion">
+                <ScalarProperty Name="Promotion_ID" ColumnName="Promotion_ID" />
+                <ScalarProperty Name="date_from" ColumnName="date_from" />
+                <ScalarProperty Name="date_to" ColumnName="date_to" />
+                <ScalarProperty Name="contentPromotion" ColumnName="contentPromotion" />
+                <ScalarProperty Name="percentPromotion" ColumnName="percentPromotion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="BookshopModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="Role_ID" ColumnName="Role_ID" />
+                <ScalarProperty Name="roleName" ColumnName="roleName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Suppliers">
+            <EntityTypeMapping TypeName="BookshopModel.Supplier">
+              <MappingFragment StoreEntitySet="Supplier">
+                <ScalarProperty Name="Supplier_ID" ColumnName="Supplier_ID" />
+                <ScalarProperty Name="supplierName" ColumnName="supplierName" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Themes">
+            <EntityTypeMapping TypeName="BookshopModel.Theme">
+              <MappingFragment StoreEntitySet="Theme">
+                <ScalarProperty Name="Theme_ID" ColumnName="Theme_ID" />
+                <ScalarProperty Name="themeName" ColumnName="themeName" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ThemeForeigns">
+            <EntityTypeMapping TypeName="BookshopModel.ThemeForeign">
+              <MappingFragment StoreEntitySet="ThemeForeign">
+                <ScalarProperty Name="ThemeForeign_ID" ColumnName="ThemeForeign_ID" />
+                <ScalarProperty Name="ThemeForeignName" ColumnName="ThemeForeignName" />
+                <ScalarProperty Name="Decription" ColumnName="Decription" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="BookshopModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
+                <ScalarProperty Name="userName" ColumnName="userName" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="avatar" ColumnName="avatar" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="phoneNumber" ColumnName="phoneNumber" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="sex" ColumnName="sex" />
+                <ScalarProperty Name="dayOfBirth" ColumnName="dayOfBirth" />
+                <ScalarProperty Name="role" ColumnName="role" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

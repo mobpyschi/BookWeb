@@ -1,0 +1,136 @@
+﻿@using Project_BookStoreCT.Models.ViewModels;
+@{
+    ViewBag.Title = "CategorysIndex";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="page-header card">
+    <div class="row align-items-end">
+        <div class="col-lg-8">
+            <div class="page-header-title">
+                <i class="feather icon-home bg-c-blue"></i>
+                <div class="d-inline">
+                    <h5>Admin</h5>
+                    <span>Manager</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="page-header-breadcrumb">
+                <ul class=" breadcrumb breadcrumb-title">
+                    <li class="breadcrumb-item">
+                        <a href="index.html"><i class="feather icon-home"></i></a>
+                    </li>
+                    <li class="breadcrumb-item"><a href="#!">Index</a> </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="pcoded-inner-content">
+    <div class="main-body">
+        <div class="page-wrapper">
+            <div class="page-body">
+                <div class="col-md-12">
+                    <div class="card table-card">
+                        <div class="card-header">
+                            <h5>Categorys Index</h5>
+                            <div class="card-header-right">
+                                <ul class="list-unstyled card-option">
+                                    <li class="first-opt"><i class="feather icon-chevron-left open-card-option"></i></li>
+                                    <li><i class="feather icon-maximize full-card"></i></li>
+                                    <li><i class="feather icon-minus minimize-card"></i></li>
+                                    <li><i class="feather icon-chevron-left open-card-option"></i></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-block p-b-0">
+                            <a href="~/Admin/AddCategorys" style="color:white;margin-left:15px;margin-top:20px;margin-bottom:35px;" class="btn btn-success">Thêm mới</a>
+                            <div class="table-responsive">
+                                <table style="margin-left:10px;" id="dtBasicExample" class="table table-hover m-b-0 table-striped table-bordered table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th>Tên thể loại tiếng Việt</th>
+                                            <th>Tên thể loại tiếng Anh</th>
+                                            <th>Chủ đề</th>
+                                            <th>Thao tác</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbody">
+                                        @foreach (CategorysIndex_ViewModels c in Model)
+                                        {
+                                            <tr id="row_@c.category_id">
+                                                <td>@c.category_nameTV</td>
+                                                <td>@c.category_nameTA</td>
+                                                <td>@c.theme_name</td>
+                                                <td>
+                                                    <input type="button" onclick="UpdateTheme(@c.category_id)" class="btn btn-primary" value="Sửa" />
+                                                    <input type="button" onclick="deleteTheme(@c.category_id,this)" class="btn btn-danger" value="Xóa" />
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    $(document).ready(function () {
+        $('#dtBasicExample').DataTable();
+    });
+    function UpdateTheme(cid) {
+        location.href = './UpdateCategorys?cid=' + cid;
+    }
+    function deleteTheme(cid, e) {
+        swal({
+            title: "Bạn chắc chắn muốn xóa",
+            text: "Sau khi xóa không thể phục hồi",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonClass: "btn-danger",
+            confirmButtonText: "Đồng ý xóa!",
+            cancelButtonText: "Tôi không xóa",
+            closeOnConfirm: false,
+            closeOnCancel: false
+        },
+            function (isConfirm) {
+                if (isConfirm) {
+                    $.ajax({
+                        url: "/Admin/DeleteCategorys",
+                        method: "POST",
+                        dataType: "json",
+                        data: {
+                            'cid': cid
+                        },
+                    }).done(function (data) {
+                        if (data.mess_ == 1) {
+                            swal({
+                                title: "Đã xóa",
+                                text: "Bạn đã xóa thành công",
+                                type: "success",
+                                timer: 3000
+                            },
+                                function () {
+                                    $(e).closest("tr").remove();
+                                });
+                        }
+                        else {
+                            swal("Xóa thất bại.");
+                        }
+                    });
+                } else {
+                    swal("An toàn là trên hết.");
+                }
+            });
+    }
+</script>
+

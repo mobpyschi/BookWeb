@@ -1,0 +1,341 @@
+﻿@using Project_BookStoreCT.Models.DataModels;
+@{
+    ViewBag.Title = "BooksInCategory";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+
+<div class="breadcrumbs-area mb-70">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumbs-menu">
+                    <ul>
+                        <li><a href="~/Home/Index">Home</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- breadcrumbs-area-end -->
+<!-- shop-main-area-start -->
+<div class="shop-main-area mb-70">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
+                <div class="shop-left">
+                    <div class="section-title-5 mb-30">
+                        <h2>LỰA CHỌN MUA SẮM</h2>
+                    </div>
+                    <div class="left-title mb-20">
+                        <h4>Thể loại</h4>
+                    </div>
+                    <div class="left-menu mb-18">
+                        <ul>
+                            @foreach (Category c in ViewBag.GetAllCategorys)
+                            {
+                            <li >
+                                <a href="~/Home/BooksInCategory?cid=@c.Category_ID">@c.categoryName</a>
+                            </li>
+                            }
+                        </ul>
+                    </div>
+                   
+    
+                    <div class="left-title mb-20">
+                        <h4>Giá</h4>
+                    </div>
+                    <div class="left-menu mb-30">
+                        <ul>
+                            <li><a href="#">0 - 50.000 USD<span>(1)</span></a></li>
+                            <li><a href="#">51.000 USD - 150.000 USD<span>(11)</span></a></li>
+                            <li><a href="#">151.000 USD - 300.000 USD<span>(2)</span></a></li>
+                            <li><a href="#">301.000 - 600.000 USD<span>(3)</span></a></li>
+                            <li><a href="#"> >600.000 USD<span>(1)</span></a></li>
+                        </ul>
+                    </div>
+                    <div class="banner-area mb-30">
+                        <div class="banner-img-2">
+                            <a href="#"><img src="~/img/banner/31.jpg" alt="banner" /></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-9 col-md-9 col-sm-8 col-xs-12">
+                @*<div class="category-image mb-30">
+                    <a href="#"><img src="~/img/banner/32.jpg" alt="banner" /></a>
+                </div>*@
+                <div class="section-title-5 mb-30">
+                    <h2> Sách </h2>
+                </div>
+                <div class="toolbar mb-18">
+                    <div class="shop-tab">
+                        <div class="tab-3">
+                            <ul>
+                                <li class="active"><a href="#th" data-toggle="tab"><i class="fa fa-th-large"></i>Grid</a></li>
+                                <li><a href="#list" data-toggle="tab"><i class="fa fa-bars"></i>List</a></li>
+                            </ul>
+                        </div>
+                        <div class="list-page">
+                            <p>Items 1-9 of 11</p>
+                        </div>
+                    </div>
+                    <div class="field-limiter">
+                        <div class="control">
+                            <span>Show</span>
+                            <!-- chosen-start -->
+                            <select data-placeholder="Default Sorting" style="width:50px;" class="chosen-select" tabindex="1">
+                                <option value="Sorting">1</option>
+                                <option value="popularity">2</option>
+                                <option value="rating">3</option>
+                                <option value="date">4</option>
+                            </select>
+                            <!-- chosen-end -->
+                        </div>
+                    </div>
+                    <div class="toolbar-sorter">
+                        <span>Sort By</span>
+                        <select id="sorter" class="sorter-options" data-role="sorter">
+                            <option selected="selected" value="position"> Position </option>
+                            <option value="name"> Product Name </option>
+                            <option value="price"> Price </option>
+                        </select>
+                        <a href="#"><i class="fa fa-arrow-up"></i></a>
+                    </div>
+                </div>
+                <!-- tab-area-start -->
+                <div class="tab-content">
+                    <div class="tab-pane active" id="th">
+                        <div class="row">
+                            @foreach (Book b in ViewBag.GetBookFromID)
+                            {
+                                if (b.statusSaleOff == true)
+                                {
+                                    <div class="col-lg-3 col-md-4 col-sm-6">
+                                        <!-- single-product-start -->
+                                        <div class="product-wrapper mb-40">
+                                            <div class="product-img">
+                                                <a href="#">
+                                                    <img src="~/imgs/@b.image" alt="book" class="primary"  />
+                                                </a>                               
+                                                <div class="product-flag">
+                                                    <ul>
+                                                        <li><span class="discount-percentage">Sale Off</span></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="product-details text-center">
+                                                <div class="product-rating">
+                                                    <ul>
+                                                        @for (int i = 0; i < b.star; i++)
+                                                        {
+                                                            <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                                        }
+                                                    </ul>
+                                                </div>
+                                                <h4><a href="#">@b.bookName</a></h4>
+                                                <div class="product-price">
+                                                    <ul>
+                                                        <li>@string.Format("{0:n0}", b.saleOffPrice) USD</li>
+                                                        <li class="old-price">@string.Format("{0:n0}",b.price) USD</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="product-link">
+                                                <div class="product-button">
+                                                    <a onclick="AddToCart(@b.Book_ID)" title="Add to cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                </div>
+                                                <div class="add-to-link">
+                                                    <ul>
+                                                        <li><a href="~/Home/BookDetail?bid=@b.Book_ID" title="Details"><i class="fa fa-external-link"></i></a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- single-product-end -->
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="col-lg-3 col-md-4 col-sm-6">
+                                        <!-- single-product-start -->
+                                        <div class="product-wrapper mb-40">
+                                            <div class="product-img">
+                                                <a href="#">
+                                                    <img src="~/imgs/@b.image" alt="book" class="primary"  />
+                                                </a>                      
+                                                <div class="product-flag">
+                                                    <ul>             
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="product-details text-center">
+                                                <div class="product-rating">
+                                                    <ul>
+                                                        @for (int i = 0; i < b.star; i++)
+                                                        {
+                                                            <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                                        }
+                                                    </ul>
+                                                </div>
+                                                <h4><a href="#">@b.bookName</a></h4>
+                                                <div class="product-price">
+                                                    <ul>
+                                                        <li>@string.Format("{0:n0}", b.price) USD</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="product-link">
+                                                <div class="product-button">
+                                                    <a onclick="AddToCart(@b.Book_ID)" title="Add to cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                </div>
+                                                <div class="add-to-link">
+                                                    <ul>
+                                                        <li><a href="~/Home/BookDetail?bid=@b.Book_ID" title="Details"><i class="fa fa-external-link"></i></a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- single-product-end -->
+                                    </div>
+                                }
+                            }
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="list">
+                        <!-- single-shop-start -->
+                        @foreach (Book b in ViewBag.GetBookFromID)
+                        {
+                            if (b.statusSaleOff == true)
+                            {
+                                <div class="single-shop mb-30">
+                                    <div class="row">
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                            <div class="product-wrapper-2">
+                                                <div class="product-img">
+                                                    <a href="#">
+                                                        <img src="~/imgs/@b.image" alt="book" class="primary" />
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                                            <div class="product-wrapper-content">
+                                                <div class="product-details">
+                                                    <div class="product-rating">
+                                                        <ul>
+                                                            @for (int i = 0; i < b.star; i++)
+                                                            {
+                                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                                            }
+                                                        </ul>
+                                                    </div>
+                                                    <h4><a href="#">@b.bookName</a></h4>
+                                                    <div class="product-price">
+                                                        <ul>
+                                                            <li>@string.Format("{0:n0}", b.saleOffPrice) USD</li>
+                                                            <li class="old-price">@string.Format("{0:n0}", b.price) USD</li>
+                                                        </ul>
+                                                    </div>                    
+                                                </div>
+                                                <div class="product-link">
+                                                    <div class="product-button">
+                                                        <a onclick="AddToCart(@b.Book_ID)" title="Add to cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                    </div>
+                                                    <div class="add-to-link">
+                                                        <ul>
+                                                            <li><a href="~/Home/BookDetail?bid=@b.Book_ID" title="Details"><i class="fa fa-external-link"></i></a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="single-shop mb-30">
+                                    <div class="row">
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                            <div class="product-wrapper-2">
+                                                <div class="product-img">
+                                                    <a href="#">
+                                                        <img src="~/imgs/@b.image" alt="book" class="primary" />
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                                            <div class="product-wrapper-content">
+                                                <div class="product-details">
+                                                    <div class="product-rating">
+                                                        <ul>
+                                                            @for (int i = 0; i < b.star; i++)
+                                                            {
+                                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                                            }
+                                                        </ul>
+                                                    </div>
+                                                    <h4><a href="#">@b.bookName</a></h4>
+                                                    <div class="product-price">
+                                                        <ul>
+                                                            <li>@string.Format("{0:n0}", b.price) USD</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="product-link">
+                                                    <div class="product-button">
+                                                        <a onclick="AddToCart(@b.Book_ID)" title="Add to cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                    </div>
+                                                    <div class="add-to-link">
+                                                        <ul>
+                                                            <li><a href="~/Home/BookDetail?bid=@b.Book_ID" title="Details"><i class="fa fa-external-link"></i></a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                        <!-- single-shop-end -->
+                    </div>
+                </div>
+                <!-- tab-area-end -->
+                <!-- pagination-area-start -->
+                <div class="pagination-area mt-50">
+                    <div class="list-page-2">
+                        <p>Items 1-9 of 11</p>
+                    </div>
+                    <div class="page-number">
+                        <ul>
+                            <li><a href="#" class="active">1</a></li>
+                            <li><a href="#">2</a></li>
+                            <li><a href="#">3</a></li>
+                            <li><a href="#">4</a></li>
+                            <li><a href="#" class="angle"><i class="fa fa-angle-right"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- pagination-area-end -->
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function AddToCart(bid) {
+        alert("Thêm vào giỏ hàng thành công")
+        $.ajax({
+            url: '/Home/Cart',
+            type: 'POST',
+            cache: true,
+            data:
+                { 'bid': bid }
+        }).done(function (data) {
+            $("#cart").html(data);
+        })
+    }
+</script>
+

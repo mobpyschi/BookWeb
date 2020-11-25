@@ -1,0 +1,23 @@
+﻿@using Project_BookStoreCT.Models.ViewModels;
+@using Project_BookStoreCT.Models.DataModels;
+
+<li>
+    <a>Foreign Books<i class="fa fa-angle-down"></i></a>
+    <div class="mega-menu">
+        @foreach (GetThemeSachNuocNgoai theme in Model)
+        {
+            <span style="padding-bottom:25px;">
+                <a class="title">@theme.themeForeignName</a>
+                @{
+                    DataContext db = new DataContext();
+                    var getcate = from c in db.Categories join t in db.ThemeForeigns on c.theme_id equals t.ThemeForeign_ID where t.ThemeForeignName == theme.themeForeignName select c;
+                    foreach (var cate in getcate)
+                    {
+                        <a href="shop.html">@cate.categoryNameForeign</a>
+                    }
+                }
+            </span>
+        }
+    </div>
+</li>
+

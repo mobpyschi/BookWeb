@@ -1,0 +1,141 @@
+﻿@using Project_BookStoreCT.Models.DataModels;
+@{
+    ViewBag.Title = "UpdateUsers";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<style>
+    .col-form-label {
+        padding-left: 50px !important;
+    }
+
+    .form-control {
+        width: 95%;
+    }
+
+    .col-sm-10 {
+        width: 90%;
+        margin: 0 auto;
+    }
+
+    .col-sm-12 {
+        margin-left: 20px !important;
+        width: 90%;
+        margin: 0 auto;
+    }
+</style>
+@foreach (var user in ViewBag.GetInfoUser)
+{
+    <div class="card-block">
+        <h4 style="text-align:center;padding-top:10px;font-weight:bold" class="sub-title">SỬA NGƯỜI DÙNG</h4>
+
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Tên người dùng (*)</label>
+            <div class="col-sm-10">
+                <input id="txtUserName" value="@user.userName" required type="text" class="form-control">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Giới tính</label>
+            <div class="col-sm-10">
+                <select style="height:35px;" id="dropSex" name="select" class="form-control">
+                    <option value="1">Nam</option>
+                    <option value="0">Nữ</option>>
+                </select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Số điện thoại (*)</label>
+            <div class="col-sm-10">
+                <input id="txtSDT" value="@user.phoneNumber" type="number" class="form-control">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Địa chỉ (*)</label>
+            <div class="col-sm-10">
+                <input id="txtDiaChi" value="@user.address" type="text" class="form-control">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Ảnh đại diện</label>
+            <div class="col-sm-10">
+                <input style="height:40px" id="fileAvatar" type="file" class="form-control">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Chức vụ</label>
+            <div class="col-sm-10">
+                <select id="txtRole" style="height:35px;" name="select" class="form-control">
+                    @foreach (var role in ViewBag.GetRoles)
+                    {
+                        <option value="@role.Role_ID">@role.roleName</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-6">
+                <button onclick="Update(@user.User_ID)" style="margin-left:5px;color:white;background-color:#ff6a00" class="form-control btn btn-primary">Sửa người dùng</button>
+            </div>
+            <div class="col-sm-6">
+                <a href="~/Admin/UsersIndex" style="margin-left:5px;color:white;background-color:#ff6a00" class="form-control btn btn-primary">Trở về</a>
+            </div>
+        </div>
+
+    </div>
+}
+<script>
+    function Update(uid) {
+        var check = true;
+        var username = $("#txtUserName").val();
+        var phone = $("#txtSDT").val();
+        var address = $("#txtDiaChi").val();
+        var sex = $("#dropSex option:selected").val()
+        var role = $("#txtRole option:selected").val()
+
+        //Lấy ảnh
+        var fileUpload = $("#fileAvatar").get(0);
+        var files = fileUpload.files;
+        // Tạo formData truyền vào ajax
+        var formData = new FormData();
+        var avatar = $("#fileAvatar")[0].files[0]
+        //append vào form data
+        formData.append('avatar', avatar)
+        formData.append('username', username)
+        formData.append('phone', phone)
+        formData.append('address', address)
+        formData.append('sex', sex)
+        formData.append('role', role)
+        formData.append('userid', uid)
+
+
+        if (username == "" || phone == "" || address == "") {
+            swal("Không được bỏ trống");
+            return check = false;
+        }
+        else {
+            if (phone.length < 10 || phone.length > 10) {
+                swal("Số điện thoại phải 10 chữ số");
+                return check = false;
+            }
+        }
+        if (check == true) {
+            $.ajax({
+                url: '/Admin/UpdateUsers',
+                type: 'POST',
+                contentType: false,
+                processData: false,
+                data: formData
+            }).done(function (data) {
+                if (data.mess_ == 1) {
+                    swal("Sửa thành công")
+                    location.href = '/Admin/UsersIndex'
+                }
+                else {
+                    swal("Sửa thất bại")
+                }
+            })
+        }
+    }
+</script>
+
+

@@ -1,0 +1,161 @@
+﻿@using Project_BookStoreCT.Models.ViewModels;
+@{
+    ViewBag.Title = "BooksIndex";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="page-header card">
+    <div class="row align-items-end">
+        <div class="col-lg-8">
+            <div class="page-header-title">
+                <i class="feather icon-home bg-c-blue"></i>
+                <div class="d-inline">
+                    <h5>Admin</h5>
+                    <span>Manager</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="page-header-breadcrumb">
+                <ul class=" breadcrumb breadcrumb-title">
+                    <li class="breadcrumb-item">
+                        <a href="index.html"><i class="feather icon-home"></i></a>
+                    </li>
+                    <li class="breadcrumb-item"><a href="#!">Index</a> </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="pcoded-inner-content">
+    <div class="main-body">
+        <div class="page-wrapper">
+            <div class="page-body">
+                <div class="col-md-12">
+                    <div class="card table-card">
+                        <div class="card-header">
+                            <h5>User Index</h5>
+                            <div class="card-header-right">
+                                <ul class="list-unstyled card-option">
+                                    <li class="first-opt"><i class="feather icon-chevron-left open-card-option"></i></li>
+                                    <li><i class="feather icon-maximize full-card"></i></li>
+                                    <li><i class="feather icon-minus minimize-card"></i></li>
+                                    <li><i class="feather icon-chevron-left open-card-option"></i></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-block p-b-0">
+                            <a href="~/Admin/AddNewUsers" style="color:white;margin-left:15px;margin-top:20px;margin-bottom:35px;" class="btn btn-success">Thêm mới</a>
+                            <div class="table-responsive">
+                                <table id="dtBasicExample" class="table table-hover m-b-0 table-striped table-bordered table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th>Tên sách</th>
+                                            <th>Đơn giá</th>
+                                            <th>Ảnh</th>
+                                            <th>Số lượng tồn</th>
+                                            <th>Số lượng bán</th>
+                                            <th>Giá khuyển mãi</th>
+                                            <th>Trạng thái khuyến mãi</th>
+                                            <th>Ngôn ngữ</th>
+                                            <th>Thể loại</th>
+                                            <th>Sao</th>
+                                            <th>Nhà cung cấp</th>
+                                            <th>Thao tác</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (BooksIndex_ViewModels book in Model)
+                                        {
+                                        <tr id="row_@book.book_id">
+                                            <td>@book.bookName</td>
+                                            <td>@book.price</td>
+                                            <td><img style="height:100px;width:75px;" src="~/imgs/@book.image" /></td>
+                                            <td>@book.quantityExist</td>
+                                            <td>@book.sellNumber</td>
+                                            <td>@book.priceSaleOff</td>
+                                            @if (book.statusSaleOff == true)
+                                            {
+                                                <td>Đang khuyến mãi</td>
+                                            }
+                                            else
+                                            {
+                                                <td>Không khuyến mãi</td>
+                                            }
+                                            <td>@book.language</td>
+                                            <td>@book.categoryName</td>
+                                            <td>@book.star</td>
+                                            <td>@book.supplierName</td>
+                                            <td>
+                                                <input type="button" onclick="Update(@book.book_id)" class="btn btn-primary" value="Sửa" />
+                                                <input type="button" onclick="Delete(@book.book_id,this)" class="btn btn-danger" value="Xóa" />
+                                                <input type="button" onclick="SaleOff(@book.book_id)" class="btn btn-info" value="Khuyến mãi" />
+                                            </td>
+                                        </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#dtBasicExample').DataTable();
+    });
+    function Update(bid) {
+        location.href = './UpdateBooks?bid=' + bid;
+    }
+    function Delete(bid, e) {
+        swal({
+            title: "Bạn chắc chắn muốn xóa",
+            text: "Sau khi xóa không thể phục hồi",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonClass: "btn-danger",
+            confirmButtonText: "Đồng ý xóa!",
+            cancelButtonText: "Tôi không xóa",
+            closeOnConfirm: false,
+            closeOnCancel: false
+        },
+            function (isConfirm) {
+                if (isConfirm) {
+                    $.ajax({
+                        url: "/Admin/DeleteBooks",
+                        method: "POST",
+                        dataType: "json",
+                        data: {
+                            'bid': bid
+                        },
+                    }).done(function (data) {
+                        if (data.mess_ == "1") {
+                            swal({
+                                title: "Đã xóa",
+                                text: "Bạn đã xóa thành công",
+                                type: "success",
+                                timer: 3000
+                            },
+                                function () {
+                                    $(e).closest("tr").remove();
+                                });
+                        }
+                        else {
+                            swal("Xóa thất bại.");
+                        }
+                    });
+                } else {
+                    swal("An toàn là trên hết.");
+                }
+            });
+    }
+    function SaleOff(bid) {
+        location.href = './SaleOffBooks?bid=' + bid;
+    }
+</script>
+
+

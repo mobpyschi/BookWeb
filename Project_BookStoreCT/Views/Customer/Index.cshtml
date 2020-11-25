@@ -1,0 +1,89 @@
+﻿@using Project_BookStoreCT.Models.ViewModels;
+@using Project_BookStoreCT.Models.ServiceModels;
+
+@{
+    ViewBag.Title = "Thông tin cá nhân";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+
+@if (SessionCheckingCustomes.customerID == null)
+{
+    @Html.Partial("_Partial404NotFound")
+}
+else
+{
+    <div class="container">
+        <div class="row mt-16 mb-70">
+            <div class="col-12 col-sm-4 col-md-4 col-lg-3 col-xl-3 ml-ssm-1">
+                <div class="card " style="width: 23.4rem;">
+                    <img class="card-img-top" style="border-radius:20rem" src="~/img/avatar/@SessionCheckingCustomes.avatar " alt="Card image cap">
+                    <div class="card-body">
+                        <div class=" col-6 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                            @foreach (CusIndex_ViewModels cus in Model)
+                            {
+                                <a href="#" onclick="updateCus(@cus.cus_id,this)" class="btn btn-success">Cập nhật</a>
+                                <a  onclick="changePass(@cus.cus_id,this)" class="btn btn-danger">Đổi mật khẩu</a>
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-8 col-md-8 col-lg-9 col-xl-9">
+                <div class="table-responsive-sm" style="margin-top:3rem">
+                    <table id="dtBasicExample" class="table table-borderless">
+
+                        <tbody>
+                            @foreach (CusIndex_ViewModels cus in Model)
+                            {
+                                <tr>
+                                    <th style="width:11rem;height:4rem">Họ và tên:</th>
+                                    <td>@cus.cusName</td>
+                                </tr>
+                                <tr>
+                                    <th style="width:11rem;height:4rem">Địa chỉ:</th>
+                                    <td>@cus.cusAddress</td>
+                                </tr>
+                                <tr>
+                                    <th style="width:11rem;height:4rem">Giới tính:</th>
+                                    @if (cus.sex == true)
+                                    {
+                                        <td>Nam</td>
+                                    }
+                                    else
+                                    {
+                                        <td>Nữ</td>
+                                    }
+
+                                </tr>
+                                <tr>
+                                    <th style="width:11rem;height:4rem">Email:</th>
+                                    <td>@cus.cusEmail</td>
+                                </tr>
+                                <tr>
+                                    <th style="width:13rem;height:4rem">Số điện thoại:</th>
+                                    <td>@cus.cusPhone</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">&nbsp</td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<script>
+    $(document).ready(function () {
+        $('#dtBasicExample').DataTable();
+    });
+    function updateCus(cus_id) {
+        location.href = './UpdateCustomer?cid=' + cus_id;
+    }
+    function changePass(cus_id) {
+        location.href = './ChangePass?cid=' + cus_id;
+    }
+</script>

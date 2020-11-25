@@ -1,0 +1,183 @@
+﻿
+@{
+    ViewBag.Title = "UpdateBooks";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<script src="~/ckeditor/ckeditor.js"></script>
+<script src="~/ckeditor/adapters/jquery.js"></script>
+<script src="~/ckeditor/styles.js"></script>
+<style>
+    .col-form-label {
+        padding-left: 50px !important;
+    }
+
+    #cke_DSC {
+        width: 95%;
+        height: 300px;
+    }
+    .form-control {
+        width: 95%;
+    }
+
+    .col-sm-10 {
+        width: 90%;
+        margin: 0 auto;
+    }
+
+    .col-sm-12 {
+        margin-left: 20px !important;
+        width: 90%;
+        margin: 0 auto;
+    }
+</style>
+@foreach (var b in ViewBag.GetBooks)
+{
+<div class="card-block">
+    <h4 style="text-align:center;padding-top:10px;font-weight:bold" class="sub-title">SỬA SÁCH</h4>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Tên sách (*)</label>
+        <div class="col-sm-10">
+            <input id="txtSach" required type="text" value="@b.bookName" class="form-control">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Đơn giá (*)</label>
+        <div class="col-sm-10">
+            <input id="txtDonGia" value="@b.price" required type="number" class="form-control">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Số lượng nhập (*)</label>
+        <div class="col-sm-10">
+            <input id="txtSoLuong" value="@b.quantityExists" type="number" class="form-control">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Hình ảnh</label>
+        <div class="col-sm-10">
+            <img src="~/imgs/@b.image" class="img-container" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Loại sản phẩm</label>
+        <div class="col-sm-10">
+            <select style="height:35px;" id="dropTheLoai" name="select" class="form-control">
+                @foreach (var c in ViewBag.GetCategory)
+                {
+                    <option value="@c.Category_ID">@c.categoryName</option>
+                }
+            </select>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Ngôn ngữ</label>
+        <div class="col-sm-10">
+            <select style="height:35px;" id="dropNgonNgu" name="select" class="form-control">
+                @foreach (var l in ViewBag.GetLanguage)
+                {
+                    <option value="@l.Language_ID">@l.languageName</option>
+                }
+            </select>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Nhà cung cấp</label>
+        <div class="col-sm-10">
+            <select style="height:35px;" id="dropNhaCungCap" name="select" class="form-control">
+                @foreach (var s in ViewBag.GetSupplier)
+                {
+                    <option value="@s.Supplier_ID">@s.supplierName</option>
+                }
+            </select>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Ảnh sách (*)</label>
+        <div class="col-sm-10">
+            <input style="height:40px" id="fileImage" type="file" class="form-control">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Mô tả</label>
+        <div class="col-sm-10">
+            <textarea name="DSC" class="form-control">
+                @Html.Raw(b.description)
+            </textarea>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-6">
+            <button onclick="Update(@b.Book_ID)" style="margin-left:5px;color:white;background-color:#ff6a00" class="form-control btn btn-primary">Sửa sách</button>
+        </div>
+        <div class="col-sm-6">
+            <a href="~/Admin/BooksIndex" style="margin-left:5px;color:white;background-color:#ff6a00" class="form-control btn btn-primary">Trở về</a>
+        </div>
+    </div>
+
+</div>
+}
+<script>
+    $('textarea').ckeditor();
+
+    function Update(bid) {
+        var check = true;
+        var bookname = $("#txtSach").val();
+        var price = $("#txtDonGia").val();
+        var number = $("#txtSoLuong").val();
+        var description = CKEDITOR.instances['DSC'].getData();
+        var category = $("#dropTheLoai option:selected").val();
+        var supplier = $("#dropNhaCungCap option:selected").val();
+        var language = $("#dropNgonNgu option:selected").val();
+
+        //Lấy ảnh
+        var fileUpload = $("#fileImage").get(0);
+        var files = fileUpload.files;
+        // Tạo formData truyền vào ajax
+        var formData = new FormData();
+        var image = $("#fileImage")[0].files[0];
+        //append vào form data
+        formData.append('image', image);
+        formData.append('number', number);
+        formData.append('bookname', bookname);
+        formData.append('price', price);
+        formData.append('description', description);
+        formData.append('category', category);
+        formData.append('supplier', supplier);
+        formData.append('language', language);
+        formData.append('book_id', bid);
+
+        if (bookname == "" || price == "" || number == "" ) {
+            swal("Không được bỏ trống");
+            return check = false;
+        }
+        else {
+            if (number < 1) {
+                swal("Số lượng nhập phải lớn hơn 0");
+                return check = false;
+            }
+            if (price < 1) {
+                swal("Đơn giá nhập phải lớn hơn 0");
+                return check = false;
+            }
+        }
+        if (check == true) {
+            $.ajax({
+                url: '/Admin/UpdateBooks',
+                type: 'POST',
+                contentType: false,
+                processData: false,
+                data: formData
+            }).done(function (data) {
+                if (data.mess_ == 1) {
+                    swal("Sửa thành công");
+                }
+                else {
+                    swal("Sửa thất bại");
+                }
+            })
+        }
+    }
+</script>
+

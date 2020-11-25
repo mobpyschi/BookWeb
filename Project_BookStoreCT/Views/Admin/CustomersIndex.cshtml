@@ -1,0 +1,146 @@
+﻿@using Project_BookStoreCT.Models.ViewModels;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="page-header card">
+    <div class="row align-items-end">
+        <div class="col-lg-8">
+            <div class="page-header-title">
+                <i class="feather icon-home bg-c-blue"></i>
+                <div class="d-inline">
+                    <h5>Admin</h5>
+                    <span>Manager</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="page-header-breadcrumb">
+                <ul class=" breadcrumb breadcrumb-title">
+                    <li class="breadcrumb-item">
+                        <a href="index.html"><i class="feather icon-home"></i></a>
+                    </li>
+                    <li class="breadcrumb-item"><a href="#!">Danh sách khách hàng</a> </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="pcoded-inner-content">
+    <div class="main-body">
+        <div class="page-wrapper">
+            <div class="page-body">
+                <div class="col-md-12">
+                    <div class="card table-card">
+                        <div class="card-header">
+                            <h5 style="margin-bottom:1rem">Danh sách khách hàng</h5>
+                            <div class="card-header-right">
+                                <ul class="list-unstyled card-option">
+                                    <li class="first-opt"><i class="feather icon-chevron-left open-card-option"></i></li>
+                                    <li><i class="feather icon-maximize full-card"></i></li>
+                                    <li><i class="feather icon-minus minimize-card"></i></li>
+                                    <li><i class="feather icon-chevron-left open-card-option"></i></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-block p-b-0">
+                            @*<a href="~/Admin/AddNewUsers" style="color:white;margin-left:15px;margin-top:20px;margin-bottom:35px;" class="btn btn-success">Thêm mới</a>*@
+                            <div class="table-responsive">
+                                <table id="dtBasicExample" class="table table-hover m-b-1 table-striped table-bordered  table-md">
+                                    <thead>
+                                        <tr>
+                                            <th>Họ tên</th>
+                                            <th>Địa chỉ</th>
+                                            <th>Email</th>
+                                            <th>Số điện thoại</th>
+                                            <th>Giới tính</th>
+                                            <th>Avatar</th>
+                                            <th>Quyền</th>
+                                            <th>Thao tác</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (CusIndex_ViewModels cus in Model)
+                                            {
+                                            <tr id="row_@cus.cus_id">
+                                                <td>@cus.cusName</td>
+                                                <td>@cus.cusAddress</td>
+                                                <td>@cus.cusEmail</td>
+                                                <td>@cus.cusPhone</td>
+                                                @if (cus.sex == true)
+                                                {
+                                                    <td class="text-center">Nam</td>
+                                                }
+                                                else
+                                                {
+                                                    <td class="text-center">Nữ</td>
+                                                }
+                                                <td><img style="height:50px;width:50px;" src="~/img/avatar/@cus.avatar" /></td>
+                                                <td>@cus.role</td>
+                                                <td>
+                                                    <input type="button" onclick="updateUser(@cus.cus_id,this)" class="btn btn-success" value="Sửa" />
+                                                    <input type="button" onclick="deleteUser(@cus.cus_id,this)" class="btn btn-danger" value="Xóa" />
+                                                    <input type="button" onclick="resetPass(@cus.cus_id,this)" class="btn btn-primary" value="Đặt lại mật khẩu" />
+                                                </td>
+                                            </tr>
+                                            }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script>$(document).ready(function () {
+        $('#dtBasicExample').DataTable();
+    });
+    function updateUser(cus_id) {
+        location.href = './UpdateCustomer?uid=' + cus_id;
+    }
+    function deleteUser(cus_id, e) {
+        swal({
+            title: "Bạn chắc chắn muốn xóa",
+            text: "Sau khi xóa không thể phục hồi",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonClass: "btn-danger",
+            confirmButtonText: "Đồng ý xóa!",
+            cancelButtonText: "Tôi không xóa",
+            closeOnConfirm: false,
+            closeOnCancel: false
+        },
+            function (isConfirm) {
+                if (isConfirm) {
+                    $.ajax({
+                        url: "/Admin/DeleteUsers",
+                        method: "POST",
+                        dataType: "json",
+                        data: {
+                            'uid': user_id
+                        },
+                    }).done(function (data) {
+                        if (data.mess_ == "1") {
+                            swal({
+                                title: "Đã xóa",
+                                text: "Bạn đã xóa thành công",
+                                type: "success",
+                                timer: 3000
+                            },
+                                function () {
+                                    $(e).closest("tr").remove();
+                                });
+                        }
+                        else {
+                            swal("Xóa thất bại.");
+                        }
+                    });
+                } else {
+                    swal("An toàn là trên hết.");
+                }
+            });
+    }</script>

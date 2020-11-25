@@ -1,0 +1,159 @@
+﻿
+@{
+    ViewBag.Title = "Registration";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+
+<div class="user-login-area mb-70">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="login-title vt-center mb-25">
+                    <br />
+                    <h2>Đăng ký</h2>
+                </div>
+            </div>
+            <div class="col-lg-offset-3 col-lg-6 col-md-offset-3 col-md-6 col-sm-12 col-xs-12">
+                <div class="login-form width-ct">
+                    <div class="form-group row row-lr">
+                        <label class="col-sm-4 col-form-label">Họ và Tên (*)</label>
+                        <div class="col-sm-10">
+                            <input id="txtUserName" required type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group row row-lr">
+                        <label class="col-sm-4 col-form-label">Email (*)</label>
+                        <div class="col-sm-10">
+                            <input id="txtEmail" required type="email" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group row row-lr">
+                        <label class="col-sm-4 col-form-label">Mật khẩu (*)</label>
+                        <div class="col-sm-10">
+                            <input id="txtPassword" type="password" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group row row-lr">
+                        <label class="col-sm-5 col-form-label">Nhập lại mật khẩu (*)</label>
+                        <div class="col-sm-10">
+                            <input id="txtNhapLaiPassword" type="password" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group row row-lr">
+                        <label class="col-sm-4 col-form-label">Giới tính</label>
+                        <div class="col-sm-10">
+                            <select style="height:35px;" id="dropSex" name="select" class="form-control">
+                                <option value="1">Nam</option>
+                                <option value="0">Nữ</option>>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row row-lr">
+                        <label class="col-sm-4 col-form-label">Số điện thoại (*)</label>
+                        <div class="col-sm-10">
+                            <input id="txtSDT" type="number" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group row row-lr">
+                        <label class="col-sm-4 col-form-label">Địa chỉ (*)</label>
+                        <div class="col-sm-10">
+                            <input id="txtDiaChi" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="alert-noted-1">
+                        <div class="alert alert-success">
+                            <span class="glyphicon glyphicon-ok"></span><strong>Đăng ký thành công</strong>
+                        </div>
+
+                    </div>
+                    <div class="alert-noted-2">
+                        <div class="alert alert-danger">
+                            <span class="glyphicon glyphicon-remove"></span><strong>Đăng ký thất bại</strong>
+                        </div>
+
+                    </div>
+                    <div class="form-group row row-lr">
+                        <div class="col-sm-3"></div>
+                        <div class="col-sm-3">
+                            <button onclick="Add()" style="margin-left:5px;color:white;background-color:#ff6a00" class="form-control btn btn-primary btn-open-regis">Đăng ký</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>            
+    </div>
+</div>
+<script>
+        
+        function Add() {
+            var check = true;
+            var username = $("#txtUserName").val();
+            var email = $("#txtEmail").val();
+            var password = $("#txtPassword").val();
+            var nhaplaipassword = $("#txtNhapLaiPassword").val();
+            var phone = $("#txtSDT").val();
+            var address = $("#txtDiaChi").val();
+            var regex = /^([a-zA-Z0-9_.+-])+\@@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+            var sex = $("#dropSex option:selected").val();
+            var tb = 0;
+
+            // Tạo formData truyền vào ajax
+            var formData = new FormData();
+            //append vào form data
+
+            formData.append('username', username)
+            formData.append('email', email)
+            formData.append('password', password)
+            formData.append('nhaplaipassword', nhaplaipassword)
+            formData.append('phone', phone)
+            formData.append('address', address)
+            formData.append('sex', sex)
+
+            if (username == "" || email == "" || password == "" || nhaplaipassword == "" || phone == "" || address == "") {
+                alert("Không được để trống");
+                return check = false;
+            }
+            else {
+                if (regex.test(email) == false) {
+                    alert("Không đúng định dạng email");
+                    return check = false;
+
+                }
+                if (phone.length < 10 || phone.length > 10) {
+                    alert("Số điện thoại phải 10 chữ số");
+                    return check = false;
+                }
+                if (password.length < 3) {
+                    alert("Password phải lớn hơn 3 chữ số");
+                    return check = false;
+                }
+                if (password != nhaplaipassword) {
+                    alert("Mật khẩu nhập lại không trùng");
+                    return check = false;
+                }
+            }
+            if (check == true) {
+                $.ajax({
+                    url: '/Customer/Registration',
+                    type: 'POST',
+                    contentType: false,
+                    processData: false,
+                    data: formData
+                }).done(function (data) {
+                    if (data.mess_ == 1) {
+                        /*$(document).ready(function Add() {
+                            $('.btn-open-regis').click(function (event) {
+                                $('.alert-noted-1').addClass('alert-noted-open');
+                            })
+                        });*/
+                        alert("Đăng ký thành công");
+                        location.href = '/Home/Index'
+                    }
+                    else {
+                        alert("Đăng ký thất bại");
+                    }
+
+                })
+            }
+        }
+    </script>

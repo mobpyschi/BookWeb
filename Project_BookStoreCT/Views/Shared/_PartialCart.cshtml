@@ -1,0 +1,92 @@
+﻿@using Project_BookStoreCT.Models.ViewModels;
+@using Project_BookStoreCT.Models.ServiceModels;
+@{ double total = 0;
+    int count = 0;
+    if (Session["Cart"] != null)
+    {
+        //var item = (List<Cart_ViewModels>)Session["Cart"];
+        //count = item.Count;
+        foreach (Cart_ViewModels cart in (List<Cart_ViewModels>)Session["Cart"])
+        {
+            total = total + cart.total ;
+            count = count + cart.number;
+        }
+        Session["ThanhTien"] =  total;
+       
+    }
+    }
+@if (Session["Cart"] != null)
+{
+<div class="my-cart">
+    <ul>
+        <li>
+            <a href="~/Home/ViewCart"><i class="fa fa-shopping-cart"></i>GIỎ HÀNG</a>
+            <span>@count</span>
+            <div class="mini-cart-sub">
+                <div class="cart-product">
+                    @foreach (Cart_ViewModels cart in (List<Cart_ViewModels>)Session["Cart"])
+                    {
+                         <div class="single-cart">
+                             <div class="cart-img">
+                                 <a><img src="~/imgs/@cart.image" alt="book" /></a>
+                          </div>
+                             <div class="cart-info">
+                                 <h5><a href="#">@cart.bookname</a></h5>
+                              <p>@cart.number x @String.Format("{0:n0}", cart.price) USD </p>
+                             </div>
+                             <div class="cart-icon">
+                                 <a onclick="RemoveItemCart(@cart.book_id)"><i class="fa fa-remove"></i></a>
+                             </div>
+                         </div>
+                     }
+                </div>
+                <div class="cart-totals">
+                    <h5>Tổng thành tiền: <span> @String.Format("{0:n0}", total) USD</span></h5>
+                </div>
+                <div class="cart-bottom">
+                    <a class="view-cart" href="~/Home/ViewCart">Xem giỏ hàng</a>
+                    @if (SessionCheckingCustomes.customerID == null)
+                    {
+                        <a class="view-cart btn-open" >Thanh toán</a> 
+                    }
+                     else
+                    {
+                        <a class="view-cart" href="~/Home/Bill">Thanh toán</a>
+                    }
+
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
+ }
+else
+{
+  <div class="my-cart">
+      <ul>
+          <li>
+              <a href="#"><i class="fa fa-shopping-cart"></i>GIỎ HÀNG</a>
+                  <span>@count</span>
+                    <div class="mini-cart-sub">
+                        <div class="cart-bottom">
+                            <a class="view-cart">Xem giỏ hàng</a>
+                            <a class="view-cart">Thanh toán</a>
+                        </div>
+              </div>
+          </li>
+      </ul>
+  </div>
+}
+<script>
+    function RemoveItemCart(bid) {
+        $.ajax({
+            url: '/Home/RemoveItemCart',
+            type: 'POST',
+            cache: true,
+            data:
+                { 'bid': bid }
+        }).done(function (data) {
+            $("#cart").html(data);
+        })
+    }
+</script>

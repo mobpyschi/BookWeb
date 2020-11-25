@@ -1,0 +1,22 @@
+﻿@using Project_BookStoreCT.Models.ViewModels;
+@using Project_BookStoreCT.Models.DataModels;
+
+<li>
+    <a style="cursor:pointer">SÁCH TRONG NƯỚC<i class="fa fa-angle-down"></i></a>
+    <div class="mega-menu">
+        @foreach (GetThemeSachTrongNuoc theme in Model)
+        {
+        <span style="padding-bottom:25px;">
+            <a class="title">@theme.themeName</a>
+            @{
+                DataContext db = new DataContext();
+                var getcate = from c in db.Categories join t in db.Themes on c.theme_id equals t.Theme_ID where t.themeName == theme.themeName select c;
+                foreach (var cate in getcate)
+                {
+                    <a href="~/Home/BooksInCategory?cid=@cate.Category_ID">@cate.categoryName</a>
+                }
+            }
+        </span>
+        }
+    </div>
+</li>

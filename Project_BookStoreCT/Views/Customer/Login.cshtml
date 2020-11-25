@@ -1,0 +1,80 @@
+﻿
+@{ ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml"; }
+
+<!-- user-login-area-start -->
+
+<div class="user-login-area mb-70">
+    <div class="user-login-area mb-70">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-sm-12  col-md-12  col-lg-12">
+                    <div class="login-title mb-20 vt-center" >
+                        <br />
+                        <h2 >Login</h2>
+                    </div>
+                </div>
+                <div class="col-lg-offset-3  col-md-offset-3 col-sm-7 col-sm-offset-3  col-md-6  col-lg-6" >
+                    <div class="login-form width-ct">
+                        <div class="form-group row row-lr">
+                            <label class="col-sm-4 col-form-label">Email: (*)</label>
+                            <div class="col-sm-10">
+                                <input id="txtEmail" required type="email" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="form-group row row-lr">
+                            <label class="col-sm-4 col-form-label">Mật khẩu: (*)</label>
+                            <div class="col-sm-10">
+                                <input id="txtPassword" type="password" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="form-group row row-lr">
+                            <input class="input-checkbox100 " style="margin-left:2rem" id="ckb1" type="checkbox" name="remember-me">
+                            <label class="label-checkbox100" for="ckb1">
+                                Lưu mật khẩu
+                            </label>
+                        </div>
+
+                        <div class="form-group row row-lr">
+                            <div class="col-sm-3"></div>
+                            <div class="col-sm-3 vt-btn">
+                                <button id="enter" onclick="eventLogin()" style="color:white;background-color:#ff6a00; " class="form-control btn btn-primary">Đăng nhập</button>
+                            </div>
+
+                        </div>
+                        <a class="text-lg-center row-lr" href="#">Quên mật khẩu?</a>
+                    </div>
+                    
+
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    
+    function eventLogin() {
+        $.ajax({
+            url: "/Customer/Login",
+            method: "POST",
+            data: {
+                'email': $("#txtEmail").val(),
+                'password': $("#txtPassword").val(),
+                'rememberMe': $("#ckb1").is(':checked'),
+            }
+        }).done(function (data) {
+            if (data._mess == 1) {
+                alert("Đăng nhập thành công")
+                location.href = '/Home/Index'
+            }
+            else {
+                if (data._mess == 0) {
+                    alert("Đăng nhập thất bại")
+                }
+            }
+        })
+    }
+</script>
