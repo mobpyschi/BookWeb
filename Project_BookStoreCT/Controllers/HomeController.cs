@@ -404,5 +404,11 @@ namespace Project_BookStoreCT.Controllers
             }
         }
 
+        public ActionResult SuccessView()
+        {
+            Session["Cart"] = null;
+            return View();
+        }
+
     }
 }
