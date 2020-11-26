@@ -44,7 +44,7 @@
                         <td class="product-thumbnail"><a href="#"><img src="~/imgs/@cart.image" alt="man" /></a></td>
                         <td class="product-name"><a href="#"><b>@cart.bookname</b></a></td>
                         <td class="product-price"><span class="amount"> @String.Format("{0:n0}", cart.price) USD </span></td>
-                        <td class="product-quantity"><input id="quantity" name="quantity" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" type = "number" maxlength = "3" value="3"></td>
+                        <td class="product-quantity"><input id="quantity" name="quantity" type="number" value="@cart.number"></td>
                         <td class="product-subtotal">@String.Format("{0:n0}", cart.total) USD</td>
                         <td class="product-remove"><button class="btn btn-danger" onclick="RemoveItemCart(@cart.book_id,this)"><i class="fa fa-times"></i></button></td>
                     </tr>}
