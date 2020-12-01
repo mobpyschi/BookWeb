@@ -25,10 +25,11 @@ namespace Project_BookStoreCT.Models.DataModels
         public string customerName { get; set; }
         public string customerAddress { get; set; }
         public string phoneNumber { get; set; }
-        public Nullable<bool> isPayment { get; set; }
-        public Nullable<bool> isDelivered { get; set; }
+        public Nullable<bool> payment_status { get; set; }
+        public Nullable<int> payment_method { get; set; }
+        public Nullable<bool> delivered_status { get; set; }
         public Nullable<System.DateTime> delivery_date { get; set; }
-        public Nullable<int> total { get; set; }
+        public Nullable<double> total { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DetailBill> DetailBills { get; set; }

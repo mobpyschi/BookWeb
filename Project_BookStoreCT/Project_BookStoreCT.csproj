@@ -3405,13 +3405,6 @@
     <Content Include="Content\bootstrap-reboot.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
-    <EntityDeploy Include="Models\DataModels\BookshopDB.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>BookshopDB.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\DataModels\BookshopDB.edmx.diagram">
-      <DependentUpon>BookshopDB.edmx</DependentUpon>
-    </Content>
     <Content Include="FontAwesome\less\brands.less" />
     <Content Include="FontAwesome\less\fontawesome.less" />
     <Content Include="FontAwesome\less\regular.less" />
@@ -3466,6 +3459,13 @@
     <Content Include="FontAwesome\webfonts\fa-solid-900.ttf" />
     <Content Include="FontAwesome\webfonts\fa-solid-900.woff" />
     <Content Include="FontAwesome\webfonts\fa-solid-900.woff2" />
+    <EntityDeploy Include="Models\DataModels\BookshopDB.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>BookshopDB.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\DataModels\BookshopDB.edmx.diagram">
+      <DependentUpon>BookshopDB.edmx</DependentUpon>
+    </Content>
     <None Include="Properties\PublishProfiles\IISProfile.pubxml" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />

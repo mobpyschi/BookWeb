@@ -16,140 +16,196 @@
 <!-- checkout-area-start -->
 @if (SessionCheckingCustomes.customerID == null)
 {
-@Html.Partial("_Partial404NotFound") }
+    @Html.Partial("_Partial404NotFound") }
 else
 {
-<div class="checkout-area mb-70">
-    <div class="container">
-        <div class="row">
-            <form id="form1" method="post">
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <div class="checkbox-form">
-                        @foreach (CusIndex_ViewModels cus in Model)
-                        {
-                            <h3>CHI TIẾT HÓA ĐƠN</h3>
-                            <div class="row">
-                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                    <div class="checkout-form-list">
-                                        <label>Tên khách hàng<span class="required">*</span> </label>
-                                        <input required="required" name="txtKhachHang" id="txtKhachHang" type="text" placeholder="" value="@cus.cusName">
+    <div class="checkout-area mb-70">
+        <div class="container">
+            <div class="row">
+                <form id="form1" method="post">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <div class="checkbox-form">
+                            @foreach (Customer cus in ViewBag.GetCus)
+                            {
+                                <h3>CHI TIẾT HÓA ĐƠN</h3>
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="checkout-form-list">
+                                            <label>Tên khách hàng<span class="required">*</span> </label>
+                                            <input required="required" name="txtKhachHang" id="txtKhachHang" type="text" placeholder="" value="@cus.customerName">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                    <div class="checkout-form-list">
-                                        <label>Địa chỉ <span class="required">*</span></label>
-                                        <input required="required" name="txtDiaChi" id="txtDiaChi" type="text" value="@cus.cusAddress">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="checkout-form-list">
+                                            <label>Địa chỉ <span class="required">*</span></label>
+                                            <input required="required" name="txtDiaChi" id="txtDiaChi" type="text" value="@cus.customerAddress">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                    <div class="checkout-form-list">
-                                        <label>Số điện thoại <span class="required">*</span></label>
-                                        <input required="required" name="txtSoDienThoai" id="txtSoDienThoai" type="number" value="@cus.cusPhone">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="checkout-form-list">
+                                            <label>Số điện thoại <span class="required">*</span></label>
+                                            <input required="required" name="txtSoDienThoai" id="txtSoDienThoai" type="number" value="@cus.customerPhone">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                    @if (Session["Cart"] != null)
-                                    {
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        @if (Session["Cart"] != null)
+                                        {
                                             <div class="method-notice col-12 mb--20" style="margin-left:1rem;">
                                                 <label style="width:100%">Phương thức thanh toán *</label>
-                                                <label style="width:100%;margin-bottom:2.2rem">
-                                                    <a href="~/Home/SuccessView"><input type="button" class="btn" value="Thanh toán COD" /></a>
-                                                    
-                                                </label>
-                                                <label>
-                                                    <a href="~/Home/PaymentWithPaypal" ><img src="~/img/logo/paypal.png" style="width:90px;height:50px;display:inline-block;position:relative;top:-11px" /></a>
-                                                </label>
-                                                <label>
-                                                    <input type="button" class="btn" value="" />
+                                                @*
+                            <label style="width:100%;margin-bottom:2.2rem">
+                                <a href="~/Home/SuccessView"><input type="button" class="btn" value="Thanh toán COD" /></a>
 
-                                                    <img src="~/img/logo/momo.png" style="width:70px;height:50px;display:inline-block;position:relative;top:-11px" />
+                            </label>
+                            <label>
+                                <a href="~/Home/PaymentWithPaypal"><img src="~/img/logo/paypal.png" style="width:90px;height:50px;display:inline-block;position:relative;top:-11px" /></a>
+                            </label>
+                            <label>
+                                <input type="button" class="btn" value="" />
+
+                                <img src="~/img/logo/momo.png" style="width:70px;height:50px;display:inline-block;position:relative;top:-11px" />
+                                                                <label style="margin-left: 3rem">
+                                                                    <input type="radio" class=" radio" value="3" name="payment" />
+
+                                                                    <img src="~/img/logo/momo.png"  style="width:70px;height:50px;display:inline-block;position:relative;top:-11px" />
+                                                                </label>
+                            </label>
+                                                *@
+                                                <label style="width:90%;margin-bottom:2rem;margin-left:3rem ">
+                                                    <input type="radio" class=" radio" value="1" name="payment" checked />
+                                                    Thanh toán COD
                                                 </label>
+                                                <label style="margin-left: 3rem">
+                                                    <input type="radio" class=" radio" value="2" name="payment" />
+
+                                                    <img src="~/img/logo/paypal.png" style="width:90px;height:50px;display:inline-block;position:relative;top:-11px" />
+                                                </label>
+
                                             </div>
-                                      }
-                                </div>
-                            </div>
-                         }
-
-                    </div>
-                </div>
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <div class="your-order">
-                        <h3>ĐƠN HÀNG CỦA BẠN</h3>
-                        <div class="your-order-table table-responsive">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th class="product-name" style="text-align:left;font-size:2rem"><strong>Sản phẩm</strong></th>
-                                        <th class="product-total" style="text-align:right">Tổng giá</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @if (Session["Cart"] != null)
-                                    {
-                                        foreach (Cart_ViewModels cart in (List<Cart_ViewModels>)Session["Cart"])
-                                        {
-                                            <tr class="cart_item" >
-                                                <td class="product-name" style="color:#f1741b;text-align:left">
-                                                    @cart.bookname <strong class="product-quantity"> × @cart.number</strong>
-                                                </td>
-                                                <td class="product-total" style="text-align:right">
-                                                    <span class="amount">@String.Format("{0:n0}", cart.total) USD</span>
-                                                </td>
-                                            </tr>
                                         }
-                                     }
-                                </tbody>
-                                <tfoot>
-                                    @if (Session["ThanhTien"] != null)
-                                    {
-                                        <tr >
+                                    </div>
+                                </div>
+                            }
 
-                                            <th style="text-align:left">Tạm tính:</th>
-                                            <td style="text-align:right">
-                                             @Session["ThanhTien"] USD </td>
-                                        </tr>
-                                        <tr>
-                                            <th style="text-align:left">Tiền shipping:</th>
-                                            <td style="text-align:right">0</td>
-                                        </tr>
-                                        <tr class="order-total" style="border-top: 3px solid #62ab00;">
-                                            <th style="text-align:left">Tổng tiền:</th>
-                                            <td style="text-align:right"><strong><span class="amount">@Session["ThanhTien"] USD</span></strong></td>
-                                        </tr>
-
-                                    }
-                                    else
-                                    {
-                                        
-                                            <tr class="order-total">
-
-                                            <th>Tạm tính:</th>
-                                            <td>0 USD</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Tiền shipping:</th>
-                                            <td>0</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Tổng tiền:</th>
-                                            <td><strong><span class="amount">0 USD</span></strong></td>
-                                        </tr>
-
-                                        
-                                    
-                                    }
-
-                                
-                                </tfoot>
-                            </table>
                         </div>
                     </div>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>}
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <div class="your-order">
+                            <h3>ĐƠN HÀNG CỦA BẠN</h3>
+                            <div class="your-order-table table-responsive">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th class="product-name" style="text-align:left;font-size:2rem"><strong>Sản phẩm</strong></th>
+                                            <th class="product-total" style="text-align:right">Tổng giá</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (Session["Cart"] != null)
+                                        {
+                                            foreach (Cart_ViewModels cart in (List<Cart_ViewModels>)Session["Cart"])
+                                            {
+                                                <tr class="cart_item">
+                                                    <td class="product-name" style="color:#f1741b;text-align:left">
+                                                        @cart.bookname <strong class="product-quantity"> × @cart.number</strong>
+                                                    </td>
+                                                    <td class="product-total" style="text-align:right">
+                                                        <span class="amount">@cart.total USD</span>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        }
+                                    </tbody>
+                                    <tfoot>
+                                        @if (Session["ThanhTien"] != null)
+                                        {
+                                            <tr>
 
+                                                <th style="text-align:left">Tạm tính:</th>
+                                                <td style="text-align:right">
+                                                    @Session["ThanhTien"] USD
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th style="text-align:left">Tiền shipping:</th>
+                                                <td style="text-align:right">0</td>
+                                            </tr>
+                                            <tr class="order-total" style="border-top: 3px solid #62ab00;">
+                                                <th style="text-align:left">Tổng tiền:</th>
+                                                <td style="text-align:right"><strong><span class="amount">@Session["ThanhTien"] USD</span></strong></td>
+                                            </tr>
+
+                                        }
+                                        else
+                                        {
+
+                                            <tr class="order-total">
+
+                                                <th>Tạm tính:</th>
+                                                <td>0 USD</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Tiền shipping:</th>
+                                                <td>0</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Tổng tiền:</th>
+                                                <td><strong><span class="amount">0 USD</span></strong></td>
+                                            </tr>
+
+
+
+                                        }
+
+
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="submit" onclick="AddBill()" class="btn thanh-toan" style="margin-left:5rem" value="Thanh toan" />
+                </form>
+            </div>
+        </div>
+    </div>}
+<script>
+    function AddBill() {
+                var check = true;
+                var customerName = $("#txtKhachHang").val();
+                var customerAddress = $("#txtDiaChi").val();
+                var phoneNumber = $("#txtSoDienThoai").val();
+                var tb = 0;
+
+                // Tạo formData truyền vào ajax
+                var formData = new FormData();
+                //append vào form data
+
+                formData.append('customerName', customerName)
+                formData.append('address', customerAddress)
+                formData.append('phoneNumber', phoneNumber)
+                
+
+                
+                if (check == true) {
+                    $.ajax({
+                        url: '/Customer/Bill',
+                        type: 'POST',
+                        contentType: false,
+                        processData: false,
+                        data: formData
+                    }).done(function (data) {
+                        if (data._mess__ == 0) {
+                            /*$(document).ready(function Add() {
+                                $('.btn-open-regis').click(function (event) {
+                                    $('.alert-noted-1').addClass('alert-noted-open');
+                                })
+                        */
+                            location.href = '/Home/FailureView'
+                        }
+                    })
+                }
+            }
+</script>
 
 
 

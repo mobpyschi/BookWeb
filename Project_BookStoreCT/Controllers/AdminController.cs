@@ -789,9 +789,9 @@ namespace Project_BookStoreCT.Controllers
         {
             using(DataContext db=new DataContext())
             {
-                ViewBag.GetBills = (from b in db.Bills where b.date_set >= from_date && b.date_set <= to_date && b.isPayment == true select b).ToList();
-                ViewBag.GetQuantityOrder = (from b in db.Bills where b.date_set >= from_date && b.date_set <= to_date && b.isPayment == true select b.Bill_ID).Count();
-                ViewBag.SumToTal = (from b in db.Bills where b.date_set >= from_date && b.date_set <= to_date && b.isPayment == true select b.total).Sum();
+                ViewBag.GetBills = (from b in db.Bills where b.date_set >= from_date && b.date_set <= to_date && b.payment_status == true select b).ToList();
+                ViewBag.GetQuantityOrder = (from b in db.Bills where b.date_set >= from_date && b.date_set <= to_date && b.payment_status == true select b.Bill_ID).Count();
+                ViewBag.SumToTal = (from b in db.Bills where b.date_set >= from_date && b.date_set <= to_date && b.payment_status == true select b.total).Sum();
                 return View();
             }       
         }

@@ -174,7 +174,7 @@ namespace Project_BookStoreCT.Controllers
                     if (Convert.ToInt32(quantity[i]) >= quanti.quantityExist)
                     {
                         return Json(new { quan_check = 1 });
-                    }
+                    } 
                     else
                     {
                         if (Convert.ToInt32(quantity[i]) <= 0)
@@ -213,7 +213,7 @@ namespace Project_BookStoreCT.Controllers
         {
             var listItem = new ItemList() { items = new List<Item>() };
             List < Cart_ViewModels > listCarts = (List<Cart_ViewModels>)Session["Cart"];
-            foreach( var cart in listCarts)
+            foreach(Cart_ViewModels cart in listCarts)
             {
                 listItem.items.Add(new Item()
                 {
@@ -328,42 +328,90 @@ namespace Project_BookStoreCT.Controllers
                 Session["Cart"] = null;
                 return View("FailureView");
             }
+            
             Session["Cart"] = null;
-            return View("SuccessView");
+            return RedirectToAction("SuccessView");
         }
-
-
+        [HttpGet]
         public ActionResult Bill()
         {
             using (DataContext db = new DataContext())
             {
-                var cus = (from c in db.Customers
-                           join r in db.Roles on c.role equals r.Role_ID
-                           where c.Customer_ID == SessionCheckingCustomes.customerID
-                           select new
-                           {
-                               c.Customer_ID,
-                               c.customerName,
-                               c.customerAddress,
-                               c.customerEmail,
-                               c.customerPhone
-                           }).ToList();
-                List<CusIndex_ViewModels> customer = new List<CusIndex_ViewModels>();
-                foreach (var c in cus)
+                ViewBag.GetCus = (from b in db.Customers where b.Customer_ID == SessionCheckingCustomes.customerID select b).ToList();
+            }
+            return View();
+        }
+
+       [HttpPost]
+        public ActionResult Bill(BillsPost bi, FormCollection f)
+        {
+            using (DataContext db = new DataContext())
+            {
+                
+                if (f["payment"] !=null)
                 {
-                    CusIndex_ViewModels ci = new CusIndex_ViewModels();
-                    ci.cus_id = c.Customer_ID;
-                    ci.cusName = c.customerName;
-                    ci.cusAddress = c.customerAddress;
-                    ci.cusEmail = c.customerEmail;
-                    ci.cusPhone = c.customerPhone;
-                    customer.Add(ci);
+                    if (Convert.ToInt32(f["payment"]) == 1)
+                    {
+                        Bill bills = new Bill();
+                        bills.customerName = f["txtKhachHang"];
+                        bills.phoneNumber = f["txtSoDienThoai"];
+                        bills.date_set = DateTime.Now;
+                        bills.customerAddress = f["txtDiaChi"];
+                        bills.total = Convert.ToInt32(Session["ThanhTien"]);
+                        bills.payment_method = Convert.ToInt32(f["payment"]);
+                        bills.payment_status = false;
+                        bills.delivered_status = false;
+                        db.Bills.Add(bills);
+                        db.SaveChanges();
+                        var bill_id_max = db.Bills.Max(x => x.Bill_ID);
+                        foreach (var item in (List<Cart_ViewModels>)Session["Cart"])
+                        {
+                            DetailBill detailBill = new DetailBill();
+                            detailBill.Bill_ID = bill_id_max;
+                            detailBill.Book_ID = item.book_id;
+                            detailBill.quantity = item.number;
+                            db.DetailBills.Add(detailBill);
+                            db.SaveChanges();
+                        }
+                        Session["Cart"] = null;
+                        return RedirectToAction("SuccessView");
+                    }
+                    else
+                    {
+                        Bill bills = new Bill();
+                        bills.customerName = f["txtKhachHang"];
+                        bills.phoneNumber = f["txtSoDienThoai"];
+                        bills.date_set = DateTime.Now;
+                        bills.customerAddress = f["txtDiaChi"];
+                        bills.total = Convert.ToInt32(Session["ThanhTien"]);
+                        bills.payment_method = Convert.ToInt32(f["payment"]);
+                        bills.payment_status = false;
+                        bills.delivered_status = false;
+                        db.Bills.Add(bills);
+                        db.SaveChanges();
+                        var bill_id_max = db.Bills.Max(x => x.Bill_ID);
+                        foreach (var item in (List<Cart_ViewModels>)Session["Cart"])
+                        {
+                            DetailBill detailBill = new DetailBill();
+                            detailBill.Bill_ID = bill_id_max;
+                            detailBill.Book_ID = item.book_id;
+                            detailBill.quantity = item.number;
+                            db.DetailBills.Add(detailBill);
+                            db.SaveChanges();
+                        }
+                        
+                        return RedirectToAction("PaymentWithPaypal");
+                    }
+                    
                 }
-                return View(customer);
+                else
+                {
+                    return Json(new { _mess__ = 0 });
+                }
+                
             }
         }
-           
-
+        
         [HttpGet]
         public ActionResult BooksInCategory(int ? cid)
         {
@@ -406,8 +454,43 @@ namespace Project_BookStoreCT.Controllers
 
         public ActionResult SuccessView()
         {
-            Session["Cart"] = null;
-            return View();
+            using (DataContext db = new DataContext())
+            {
+                var bill_id_max = db.Bills.Max(x => x.Bill_ID);
+                var bookbill = (from b in db.Books
+                           join d in db.DetailBills on b.Book_ID equals d.Book_ID
+                           join bi in db.Bills on d.Bill_ID equals bi.Bill_ID
+                           where d.Book_ID == b.Book_ID && d.Bill_ID == bill_id_max
+                                select new
+                           {
+                               b.bookName,
+                               b.image,
+                               d.quantity,
+                               b.price,
+                               bi.customerName,
+                               bi.phoneNumber,
+                               bi.total,
+                               bi.payment_method
+                           }).ToList();
+               
+                List<DetailBills_ViewModels> detailsBill = new List<DetailBills_ViewModels>();
+                foreach (var b in bookbill)
+                {
+                    DetailBills_ViewModels detailBills = new DetailBills_ViewModels();
+                    detailBills.bookName = b.bookName;
+                    detailBills.image = b.image;
+                    detailBills.quantity = b.quantity;
+                    detailBills.price = b.price;
+                    detailBills.customerName = b.customerName;
+                    detailBills.phone = b.phoneNumber;
+                    detailBills.total = (double)b.total;
+                    detailBills.payment_method = (int)b.payment_method;
+                    detailsBill.Add(detailBills);
+                }
+               
+                return View(detailsBill);
+            }
+            
         }
 
     }

@@ -25,7 +25,7 @@
                         <table id="myTable">
                             <thead>
                                 <tr>
-                                    <th class="product-thumbnail"><b>ID</b></th>
+                                    
                                     <th class="product-thumbnail"><b>Hình ảnh</b></th>
                                     <th class="product-name"><b>TÊN SẢN PHẨM</b></th>
                                     <th class="product-price"><b>Đơn giá</b></th>
@@ -39,13 +39,12 @@
                                 {
                                     foreach (Cart_ViewModels cart in (List<Cart_ViewModels>)Session["Cart"])
                                     {
-                    <tr id="row_@cart.book_id">
-                        <td class="product-thumbnail">@cart.book_id</td>
+                        <tr id="row_@cart.book_id">
                         <td class="product-thumbnail"><a href="#"><img src="~/imgs/@cart.image" alt="man" /></a></td>
                         <td class="product-name"><a href="#"><b>@cart.bookname</b></a></td>
-                        <td class="product-price"><span class="amount"> @String.Format("{0:n0}", cart.price) USD </span></td>
+                        <td class="product-price"><span class="amount">  @cart.price USD </span></td>
                         <td class="product-quantity"><input id="quantity" name="quantity" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" type = "number" maxlength = "3" value="@cart.number"></td>
-                        <td class="product-subtotal">@String.Format("{0:n0}", cart.total) USD</td>
+                        <td class="product-subtotal"> @cart.total USD</td>
                         <td class="product-remove"><button class="btn btn-danger" onclick="RemoveItemCart(@cart.book_id,this)"><i class="fa fa-times"></i></button></td>
                     </tr>}
                                 }
@@ -107,7 +106,7 @@
                                         <strong>
                                             @if (Session["ThanhTien"] != null)
                                             {
-                                                  <span class="amount">@String.Format("{0:n0}", Session["ThanhTien"]) USD</span> }
+                                                  <span class="amount"> @Session["ThanhTien"] USD</span> }
                                             else
                                             {
                                                    <span class="amount">0 VNĐ</span>
@@ -142,7 +141,7 @@
 </div>
 <!-- cart-main-area-end -->
 <script>
-    function check()
+    
 
     function RemoveItemCart(bid, e) {
         var check = confirm("Xác nhận xóa sách này khỏi giỏ hàng");

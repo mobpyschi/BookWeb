@@ -26,15 +26,16 @@
           <Key>
             <PropertyRef Name="Bill_ID" />
           </Key>
-          <Property Name="Bill_ID" Type="int" Nullable="false" />
+          <Property Name="Bill_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="date_set" Type="datetime" />
           <Property Name="customerName" Type="nvarchar" MaxLength="150" />
           <Property Name="customerAddress" Type="nvarchar" MaxLength="150" />
           <Property Name="phoneNumber" Type="nchar" MaxLength="10" />
-          <Property Name="isPayment" Type="bit" />
-          <Property Name="isDelivered" Type="bit" />
+          <Property Name="payment_status" Type="bit" />
+          <Property Name="payment_method" Type="int" />
+          <Property Name="delivered_status" Type="bit" />
           <Property Name="delivery_date" Type="datetime" />
-          <Property Name="total" Type="int" />
+          <Property Name="total" Type="float" />
         </EntityType>
         <EntityType Name="Book">
           <Key>
@@ -248,7 +249,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_DetailBill_Bill">
+        <Association Name="FK_Detail_bill">
           <End Role="Bill" Type="Self.Bill" Multiplicity="1" />
           <End Role="DetailBill" Type="Self.DetailBill" Multiplicity="*" />
           <ReferentialConstraint>
@@ -331,7 +332,7 @@
             <End Role="Role" EntitySet="Role" />
             <End Role="Customer" EntitySet="Customer" />
           </AssociationSet>
-          <AssociationSet Name="FK_DetailBill_Bill" Association="Self.FK_DetailBill_Bill">
+          <AssociationSet Name="FK_Detail_bill" Association="Self.FK_Detail_bill">
             <End Role="Bill" EntitySet="Bill" />
             <End Role="DetailBill" EntitySet="DetailBill" />
           </AssociationSet>
@@ -373,16 +374,17 @@
           <Key>
             <PropertyRef Name="Bill_ID" />
           </Key>
-          <Property Name="Bill_ID" Type="Int32" Nullable="false" />
+          <Property Name="Bill_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="date_set" Type="DateTime" Precision="3" />
           <Property Name="customerName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="customerAddress" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="phoneNumber" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="isPayment" Type="Boolean" />
-          <Property Name="isDelivered" Type="Boolean" />
+          <Property Name="payment_status" Type="Boolean" />
+          <Property Name="payment_method" Type="Int32" />
+          <Property Name="delivered_status" Type="Boolean" />
           <Property Name="delivery_date" Type="DateTime" Precision="3" />
-          <Property Name="total" Type="Int32" />
-          <NavigationProperty Name="DetailBills" Relationship="Self.FK_DetailBill_Bill" FromRole="Bill" ToRole="DetailBill" />
+          <Property Name="total" Type="Double" />
+          <NavigationProperty Name="DetailBills" Relationship="Self.FK_Detail_bill" FromRole="Bill" ToRole="DetailBill" />
         </EntityType>
         <EntityType Name="Book">
           <Key>
@@ -445,7 +447,7 @@
           <Property Name="Bill_ID" Type="Int32" Nullable="false" />
           <Property Name="Book_ID" Type="Int32" Nullable="false" />
           <Property Name="quantity" Type="Int32" />
-          <NavigationProperty Name="Bill" Relationship="Self.FK_DetailBill_Bill" FromRole="DetailBill" ToRole="Bill" />
+          <NavigationProperty Name="Bill" Relationship="Self.FK_Detail_bill" FromRole="DetailBill" ToRole="Bill" />
           <NavigationProperty Name="Book" Relationship="Self.FK_DetailBill_Book" FromRole="DetailBill" ToRole="Book" />
         </EntityType>
         <EntityType Name="Language">
@@ -542,7 +544,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_DetailBill_Bill">
+        <Association Name="FK_Detail_bill">
           <End Role="Bill" Type="Self.Bill" Multiplicity="1" />
           <End Role="DetailBill" Type="Self.DetailBill" Multiplicity="*" />
           <ReferentialConstraint>
@@ -673,7 +675,7 @@
             <End Role="Book" EntitySet="Books" />
             <End Role="Authors_Books" EntitySet="Authors_Books" />
           </AssociationSet>
-          <AssociationSet Name="FK_DetailBill_Bill" Association="Self.FK_DetailBill_Bill">
+          <AssociationSet Name="FK_Detail_bill" Association="Self.FK_Detail_bill">
             <End Role="Bill" EntitySet="Bills" />
             <End Role="DetailBill" EntitySet="DetailBills" />
           </AssociationSet>
@@ -742,8 +744,9 @@
                 <ScalarProperty Name="customerName" ColumnName="customerName" />
                 <ScalarProperty Name="customerAddress" ColumnName="customerAddress" />
                 <ScalarProperty Name="phoneNumber" ColumnName="phoneNumber" />
-                <ScalarProperty Name="isPayment" ColumnName="isPayment" />
-                <ScalarProperty Name="isDelivered" ColumnName="isDelivered" />
+                <ScalarProperty Name="payment_status" ColumnName="payment_status" />
+                <ScalarProperty Name="payment_method" ColumnName="payment_method" />
+                <ScalarProperty Name="delivered_status" ColumnName="delivered_status" />
                 <ScalarProperty Name="delivery_date" ColumnName="delivery_date" />
                 <ScalarProperty Name="total" ColumnName="total" />
               </MappingFragment>
