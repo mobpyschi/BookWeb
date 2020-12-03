@@ -6366,6 +6366,32 @@ p.lost-password a:hover {
     transition: 0.6s;
     transform: translateY(-500px);
 }
+.box-note-1 {
+    width: 30%;
+    height: 230px;
+    /*box-shadow: 1px 5px 5px rgba(199, 163, 163, 0.76);*/
+    position: fixed;
+    top: 35%;
+    left: 34%;
+    z-index: 99999999;
+    opacity: 0;
+    visibility: visible;
+    transition: 0.6s;
+    transform: translateY(-500px);
+}
+.box-note-2 {
+    width: 30%;
+    height: 230px;
+    /*box-shadow: 1px 5px 5px rgba(199, 163, 163, 0.76);*/
+    position: fixed;
+    top: 35%;
+    left: 34%;
+    z-index: 99999999;
+    opacity: 0;
+    visibility: visible;
+    transition: 0.6s;
+    transform: translateY(-500px);
+}
 .box-form {
     width:95%;
     height: 200px;
@@ -6416,6 +6442,26 @@ p.lost-password a:hover {
     transition: 0.6s;
     transform: translateY(0px);
 }
+
+
+/*================================*/
+.box-form-1 {
+    width: 110%;
+    height: 50px;
+    margin: 1rem;
+    background-color: #f9efeffa;
+    text-align: center;
+    border-radius: 30px;
+    box-shadow: 1px 5px 5px rgba(199, 163, 163, 0.76);
+    position: fixed;
+    z-index: 99999999;
+}
+.box-open-1 {
+    opacity: 1;
+    visibility: visible;
+    transition: 0.6s;
+    transform: translateY(0px);
+}
 /*=================================*/
 /*===============Noted=============*/
 .alert-noted-1 {
@@ -6457,102 +6503,3 @@ p.lost-password a:hover {
     }
 
 /*======================================*/
-/*Check phương thức thanh toán*/
-
-
-@keyframes click-wave {
-    0% {
-        height: 45px;
-        width: 0px;
-        opacity: 0.55;
-        position: relative;
-    }
-
-    100% {
-        height: 200px;
-        width: 200px;
-        margin-left: -90px;
-        margin-top: -90px;
-        opacity: 0;
-    }
-}
-
-.option-input-test {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    -ms-appearance: none;
-    -o-appearance: none;
-    appearance: none;
-    position: relative;
-    top: -10px;
-    right: 0;
-    bottom: 0;
-    left: -10px;
-    width: 0px !important;
-    height: 45px;
-    transition: all 0.15s ease-out 0s;
-    background: #cbd1d8 !important;
-    border: none;
-    color: #fff;
-    cursor: pointer;
-    display: block;
-    margin-right: 0.5rem;
-    outline: none;
-    position: relative;
-    z-index: 1000000;
-}
-
-    .option-input-test:hover {
-        background: #9faab7;
-    }
-
-    .option-input-test:checked {
-        background: #40e0d0;
-    }
-
-        .option-input-test:checked::before {
-            width: 0px !important;
-            height: 45px;
-            position: absolute;
-            content: '✔';
-            display: inline-block;
-            font-size: 33.66667px;
-            color: #62ab00;
-            text-align: center;
-            line-height: 25px;
-            left: 7px;
-        }
-
-        .option-input-test:checked::after {
-            -webkit-animation: click-wave 0.65s;
-            -moz-animation: click-wave 0.65s;
-            animation: click-wave 0.65s;
-            background: #40e0d0;
-            content: '';
-            display: block;
-            position: relative;
-            z-index: 1000000;
-        }
-
-    .option-input-test.radio {
-        border-radius: 50%;
-    }
-
-        .option-input-test.radio::after {
-            border-radius: 50%;
-        }
-
-.thanh-toan {
-    background: #F07C29 none repeat scroll 0 0;
-    color: #fff;
-    display: inline-block;
-    font-size: 13px;
-    font-weight: 700;
-    height: 50px;
-    line-height: 50px;
-    margin-top: 20px;
-    padding: 0 30px;
-    text-transform: uppercase;
-    font-family: Cambria, Cochin, Georgia, Times, Times New Roman, serif;
-    font-weight: 400;
-}

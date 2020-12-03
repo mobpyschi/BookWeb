@@ -161,31 +161,33 @@ namespace Project_BookStoreCT.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult UpdateCart(BooksPost quanti, FormCollection f)
+        public ActionResult UpdateCart(BooksPost bo, FormCollection f)
         {
             using (DataContext db = new DataContext())
             {
-                string[] quantity = f.GetValues("quantity");
+                int quantities = bo.number;
+                int[] quantity = new int[] { quantities };
                 var carts = (List<Cart_ViewModels>)Session["Cart"];
-                Book book = db.Books.Where(x => x.Book_ID == quanti.book_id).FirstOrDefault();
+                Book book = db.Books.Where(x => x.Book_ID == bo.book_id).FirstOrDefault();
 
                 for (int i = 0; i < carts.Count; i++)
                 {
-                    if (Convert.ToInt32(quantity[i]) >= quanti.quantityExist)
+                    if (quantity[i] > book.quantityExists)
                     {
-                        return Json(new { quan_check = 1 });
+                        return Json(new { _mess__ = 0 });
                     } 
                     else
                     {
-                        if (Convert.ToInt32(quantity[i]) <= 0)
+                        if (quantity[i] <= 0)
                         {
                             carts.Remove(carts[i]);
                         }
                         else
                         {
-                            carts[i].number = Convert.ToInt32(quantity[i]);
+                            carts[i].number = quantity[i];
                             carts[i].total = Convert.ToDouble(carts[i].number * carts[i].price);
                         }
+                        
                     }
 
                 }
@@ -196,10 +198,10 @@ namespace Project_BookStoreCT.Controllers
                 foreach (var item in (List<Cart_ViewModels>)Session["Cart"])
                 {
 
-                    total = total + item.total;
+                    total = total + Math.Round(item.total,2);
                 }
                 Session["ThanhTien"] = total;
-                return View("ViewCart");
+                return Json(new { _mess__ = 1 });
             }
         }
 
@@ -357,7 +359,7 @@ namespace Project_BookStoreCT.Controllers
                         bills.phoneNumber = f["txtSoDienThoai"];
                         bills.date_set = DateTime.Now;
                         bills.customerAddress = f["txtDiaChi"];
-                        bills.total = Convert.ToInt32(Session["ThanhTien"]);
+                        bills.total = (double?)Session["ThanhTien"];
                         bills.payment_method = Convert.ToInt32(f["payment"]);
                         bills.payment_status = false;
                         bills.delivered_status = false;
@@ -373,6 +375,7 @@ namespace Project_BookStoreCT.Controllers
                             db.DetailBills.Add(detailBill);
                             db.SaveChanges();
                         }
+                       
                         Session["Cart"] = null;
                         return RedirectToAction("SuccessView");
                     }
@@ -383,7 +386,7 @@ namespace Project_BookStoreCT.Controllers
                         bills.phoneNumber = f["txtSoDienThoai"];
                         bills.date_set = DateTime.Now;
                         bills.customerAddress = f["txtDiaChi"];
-                        bills.total = Convert.ToInt32(Session["ThanhTien"]);
+                        bills.total = (double?)Session["ThanhTien"];
                         bills.payment_method = Convert.ToInt32(f["payment"]);
                         bills.payment_status = false;
                         bills.delivered_status = false;
@@ -456,6 +459,7 @@ namespace Project_BookStoreCT.Controllers
         {
             using (DataContext db = new DataContext())
             {
+
                 var bill_id_max = db.Bills.Max(x => x.Bill_ID);
                 var bookbill = (from b in db.Books
                            join d in db.DetailBills on b.Book_ID equals d.Book_ID

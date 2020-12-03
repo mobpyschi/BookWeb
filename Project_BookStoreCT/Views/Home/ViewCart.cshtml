@@ -46,8 +46,8 @@
                         <td class="product-quantity"><input id="quantity" name="quantity" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" type = "number" maxlength = "3" value="@cart.number"></td>
                         <td class="product-subtotal"> @cart.total USD</td>
                         <td class="product-remove"><button class="btn btn-danger" onclick="RemoveItemCart(@cart.book_id,this)"><i class="fa fa-times"></i></button></td>
-                    </tr>}
-                                }
+                    </tr>       }
+                             }    
                             </tbody>
                         </table>
                     </div>
@@ -57,18 +57,16 @@
                 <div class="col-lg-8 col-md-8 col-sm-6 col-xs-12">
                     <div class="buttons-cart mb-30">
                         <ul>
-                            <li><input type="submit" value="Cập nhập giỏ hàng" /> </li>
+                            @if(Session["Cart"] != null)
+                            {
+                                foreach (Cart_ViewModels cart in (List<Cart_ViewModels>)Session["Cart"])
+                                {<li><input type="button" onclick="updateCart(@cart.book_id,this)" value="Cập nhập giỏ hàng" /> </li> }
+                            }
+                            
                             <li><a href="~/Home/Index">Tiếp tục mua hàng</a></li>
                         </ul>
                     </div>
-                    @*<div class="coupon">
-                            <h3>Coupon</h3>
-                            <p>Enter your coupon code if you have one.</p>
-                            <form action="#">
-                                <input type="text" placeholder="Coupon code">
-                                <a href="#">Apply Coupon</a>
-                            </form>
-                        </div>*@
+                
                 </div>
                 <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
                     <div class="cart_totals">
@@ -142,7 +140,45 @@
 <!-- cart-main-area-end -->
 <script>
     
-
+    function updateCart(bookid) {
+        var check = true;
+        var number = $("#quantity").val();
+        var formData = new FormData();
+        formData.append('number', number)
+        formData.append('book_id', bookid)
+        if (check == true) {
+            $.ajax({
+                url: '/Home/UpdateCart',
+                type: 'POST',
+                contentType: false,
+                processData: false,
+                data: formData
+            }).done(function (data) {
+                if (data._mess__ == 1) {
+                    $('.box-note-1').addClass('box-open');
+                    $('.box-note-1').click(function (event) {
+                        $('.box-note-1').removeClass('box-open');
+                        location.href = '/Home/ViewCart'
+                    })
+                    $('.background-blurry').click(function (event) {
+                        $('.box-note-1').removeClass('box-open');
+                        location.href = '/Home/ViewCart'
+                    })
+                }
+                else {
+                    $('.box-note-2').addClass('box-open');
+                    $('.box-note-2').click(function (event) {
+                        $('.box-note-2').removeClass('box-open');
+                        location.href = '/Home/ViewCart'
+                    })
+                    $('.background-blurry').click(function (event) {
+                        $('.box-note-2').removeClass('box-open');
+                        
+                    })
+                }
+            })
+        }
+    }
     function RemoveItemCart(bid, e) {
         var check = confirm("Xác nhận xóa sách này khỏi giỏ hàng");
         if (check == true) {

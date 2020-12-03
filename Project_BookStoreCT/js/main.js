@@ -535,6 +535,6 @@
             $('div.background-blurry').removeClass('box-open');
         })
     });
-
+ 
 
 })(jQuery);

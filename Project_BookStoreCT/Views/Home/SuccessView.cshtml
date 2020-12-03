@@ -18,57 +18,51 @@ else
     <div class="checkout-area mb-70">
         <div class="container">
             <div class="row">
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="your-order">
                         <h3>ĐƠN HÀNG CỦA BẠN</h3>
                         <div class="your-order-table table-responsive">
-                            @foreach (DetailBills_ViewModels bill in Model)
-                            {
-                                <table>
-
+                            
+                            <table>
+                                <thead>
                                     <tr>
-                                        <th style="width:11rem;height:4rem;text-align:left">Ten san pham:</th>
-                                        <td style="text-align:right">@bill.bookName</td>
-                                    </tr>
-                                    <tr>
-                                        <th style="width:11rem;height:4rem;text-align:left">So luong:</th>
-                                        <td style="text-align:right">@bill.quantity</td>
-                                    </tr>
-                                    <tr>
-                                        <th style="width:11rem;height:4rem;text-align:left">Gia:</th>
-                                        <td style="text-align:right">@bill.price</td>
-                                    </tr>
-                                    <tr>
-                                        <th style="width:11rem;height:4rem;text-align:left">Tong tien:</th>
-                                        <td style="text-align:right">@bill.total</td>
-                                    </tr>
-                                    <tr>
-                                        <th style="width:13rem;height:4rem;text-align:left">Ten khach hang:</th>
-                                        <td style="text-align:right">@bill.customerName</td>
-                                    </tr>
-                                    <tr>
-                                        <th style="width:13rem;height:4rem;text-align:left">So dien thoai:</th>
-                                        <td style="text-align:right">@bill.phone</td>
-                                    </tr>
-                                    <tr>
-                                        <th style="width:13rem;height:4rem;text-align:left">Phuong thuc thanh toan:</th>
-                                        @if (bill.payment_method == 1)
-                                        {
-                                            <td style="text-align:right"> Thanh toan COD</td>
-                                        }
-                                        else
-                                        {
-                                            <td style="text-align:right"> Thanh toan PayPal</td>
-                                        }
-
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2">&nbsp</td>
+                                        <th class="product-name"><b>TÊN SẢN PHẨM</b></th>
+                                        <th class="product-quantity"><b>Số lượng</b></th>
+                                        <th class="product-price"><b>Đơn giá</b></th>
+                                        <th class="product-name"><b>Tên khách hàng</b></th>
+                                        <th class="product-quantity"><b>Điện thoại</b></th>
+                                        <th class="product-name"><b>Phuong thuc thanh toan</b></th>
+                                        
                                     </tr>
                                     
+                                </thead>
+                                
+                                <tbody>
+                                    @foreach (DetailBills_ViewModels bill in Model)
+                                    {
+                                        <tr>
+                                            <td>@bill.bookName</td>
+                                            <td>@bill.quantity</td>
+                                            <td>@bill.price USD</td>
+                                            <td>@bill.customerName</td>
+                                            <td>@bill.phone</td>
+                                            @if (bill.payment_method == 1)
+                                            {
+                                                <td style="text-align:right"> Thanh toan COD</td>
+                                            }
+                                            else
+                                            {
+                                                <td style="text-align:right"> Thanh toan PayPal</td>
+                                            }
+                                            
+                                        </tr>
+                                    }
+                                    <tr ><td colspan="6" class="product-subtotal"><b>Tổng tiền:</b>@Session["ThanhTien"] USD</td></tr>
+                                    </tbody>
+                                
                                 </table>
-                            }
-                                <h3 class="text-center">Cam on ban da dat hang tai cua hang chung toi!</h3>
+                            
+                                <h3 class="text-center">Bạn đã đặt hàng thành công! Xin cảm ơn.</h3>
                             </div>
                     </div>
                 </div>
