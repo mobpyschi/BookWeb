@@ -168,6 +168,7 @@ else
             }).done(function (data) {
                 if (data.mess_ == 1) {
                     alert("Thêm thành công")
+                    location.href = '/Admin/UsersIndex'
                 }
                 else {
                     alert("Email đã tồn tại")

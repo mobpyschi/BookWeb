@@ -15,6 +15,7 @@ namespace Project_BookStoreCT.Models.ViewModels
         public double total { get; set; }
         public double? price { get; set; }
         public int payment_method { get; set; }
-        public double saleOffPrice { get; set; }
+        public double? saleOffPrice { get; set; }
+        public bool? statusSaleOff { get; set; }
     }
 }

@@ -27,8 +27,8 @@
     <link rel="stylesheet" href="~/AdminStyles/Index/files/bower_components/chartist/css/chartist.css" type="text/css" media="all">
     <link rel="stylesheet" type="text/css" href="~/AdminStyles/Index/files/assets/css/style.css">
     <link rel="stylesheet" type="text/css" href="~/AdminStyles/Index/files/assets/css/widget.css">
-    <script src="~/Scripts/jquery-3.3.1.js"></script>
-    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/jquery-3.5.1.js"></script>
+    <script src="~/Scripts/jquery-3.5.1.min.js"></script>
     <link href="~/Scripts/sweetalert.css" rel="stylesheet" />
     <script src="~/Scripts/sweetalert.js"></script>
     <script src="~/Scripts/sweetalert.min.js"></script>
@@ -36,6 +36,7 @@
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+
 </head>
 <body>
     <div class="loader-bg">
@@ -45,291 +46,498 @@
 
     @if (SessionCheckingServices.password == "202CB962AC59075B964B07152D234B70")
     {
-<div class="background-blurry"></div>
-                <div class="box-note">
-                    <div class="box-form">
-                        <div class="box-header">
-                            <h4><i class="fas fa-exclamation-triangle"></i>Chú ý</h4>
-                            <a class="btn-close"><i class="far fa-times-circle" style=" padding: 6px; float: right; font-size: 2rem;color:white;cursor:pointer"></i></a>
-                        </div>
-                        <div class="box-content">
-                            <p>Bạn phải đổi mật khẩu và đăng nhập lại.</p>
-                        </div>
-                        <div class="box-footer">
-                            <a class="btn-login" href="~/Admin/ChangePass?uid=@SessionCheckingServices.userID ">Cập nhật mật khẩu</a>
-                                
-                        </div>
-                    </div>
-
+        <div class="background-blurry"></div>
+        <div class="box-note">
+            <div class="box-form">
+                <div class="box-header">
+                    <h4><i class="fas fa-exclamation-triangle"></i>Chú ý</h4>
+                    <a class="btn-close"><i class="far fa-times-circle" style=" padding: 6px; float: right; font-size: 2rem;color:white;cursor:pointer"></i></a>
                 </div>
-                                <div>
-                                    <div id="pcoded" class="pcoded">
-                                        <div class="pcoded-overlay-box"></div>
-                                        <div class="pcoded-container navbar-wrapper">
-                                            <nav class="navbar header-navbar pcoded-header">
-                                                <div class="navbar-wrapper">
-                                                    <div class="navbar-logo">
-                                                        <a href="~/Admin/Index">
-                                                            <span>ADMIN PAGE</span>
-                                                        </a>
-                                                        <a class="mobile-menu" id="mobile-collapse" href="#!">
-                                                            <i class="feather icon-menu icon-toggle-right"></i>
-                                                        </a>
-                                                        <a class="mobile-options waves-effect waves-light">
-                                                            <i class="feather icon-more-horizontal"></i>
-                                                        </a>
-                                                    </div>
-                                                    <div class="navbar-container container-fluid">
-                                                        <ul class="nav-left">
-                                                            <li class="header-search">
-                                                                <div class="main-search morphsearch-search">
-                                                                    <div class="input-group">
-                                                                        <span class="input-group-prepend search-close">
-                                                                            <i class="feather icon-x input-group-text"></i>
-                                                                        </span>
-                                                                    </div>
-                                                                </div>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#!" onclick="if (!window.__cfRLUnblockHandlers) return false; javascript:toggleFullScreen()" class="waves-effect waves-light" data-cf-modified-31ecd1c8df647a02aa4d009e-="">
-                                                                    <i class="full-screen feather icon-maximize"></i>
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                        <ul class="nav-right">
-
-                                                            <li class="user-profile header-notification">
-                                                                <div class="dropdown-primary dropdown">
-                                                                    @*<div class="dropdown-toggle" data-toggle="dropdown">
-                                                                            <img src="~/AdminStyles/Index/files/assets/images/avatar-4.jpg" class="img-radius" alt="User-Profile-Image">
-                                                                            <span>John Doe</span>
-                                                                            <i class="feather icon-chevron-down"></i>
-                                                                        </div>*@
-                                                                    @{ Html.RenderAction("_PartialUserInformation", "Admin");}
-                                                                    <ul class="show-notification profile-notification dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
-                                                                        <li>
-                                                                            <a href="#">
-                                                                                <i class="feather icon-mail"></i> Email Shop
-                                                                            </a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <a href="#">
-                                                                                <i class="feather icon-alert-octagon"></i> Change Password
-                                                                            </a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <a onclick="LogOut()">
-                                                                                <i class="feather icon-log-out"></i> Logout
-                                                                            </a>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </nav>
-
-
-                                            <div class="pcoded-main-container">
-                                                <div class="pcoded-wrapper">
-                                                    <nav class="pcoded-navbar">
-                                                        <div class="nav-list">
-                                                            <div class="pcoded-inner-navbar main-menu">
-                                                                <div class="pcoded-navigation-label">QUẢN TRỊ</div>
-
-                                                                <ul class="pcoded-item pcoded-left-item " >
-                                                                    <li class="pcoded-hasmenu ">
-                                                                        <a href="javascript:void(0)" class="waves-effect waves-dark">
-                                                                            <span class="pcoded-micon"><i class="feather icon-sidebar"></i></span>
-                                                                            <span class="pcoded-mtext">Tài khoản</span>
-                                                                        </a>
-                                                                        @*<ul class="pcoded-submenu ">
-            <li class=" pcoded-hasmenu">
-                <a href="~/Admin/UsersIndex" class="waves-effect waves-dark">
-                    <span class="pcoded-mtext">Tài khoản nhân viên</span>
-                </a>
-            </li>
-            <li class=" pcoded-hasmenu">
-                <a href="~/Admin/CustomersIndex" class="waves-effect waves-dark">
-                    <span class="pcoded-mtext">Tài khoản khách hàng</span>
-                </a>
-            </li>
-        </ul>*@
-</ul>
-
-                                                                <ul class="pcoded-item pcoded-left-item">
-                                                                    <li class="pcoded-hasmenu">
-                                                                        <a href="javascript:void(0)" class="waves-effect waves-dark">
-                                                                            <span class="pcoded-micon"><i class="feather icon-sidebar"></i></span>
-                                                                            <span class="pcoded-mtext">Sách</span>
-                                                                        </a>
-                                                                        @*<ul class="pcoded-submenu">
-            <li class=" pcoded-hasmenu">
-                <a href="~/Admin/BooksIndex" class="waves-effect waves-dark">
-                    <span class="pcoded-mtext">Danh sách sản phẩm</span>
-                </a>
-            </li>
-
-        </ul>*@
-</ul>
-
-
-                                                                <ul class="pcoded-item pcoded-left-item">
-                                                                    <li class="pcoded-hasmenu">
-                                                                        <a href="javascript:void(0)" class="waves-effect waves-dark">
-                                                                            <span class="pcoded-micon"><i class="feather icon-sidebar"></i></span>
-                                                                            <span class="pcoded-mtext">Loại sách</span>
-                                                                        </a>
-                                                                        @*<ul class="pcoded-submenu">
-            <li class=" pcoded-hasmenu">
-                <a href="~/Admin/CategorysIndex" class="waves-effect waves-dark">
-                    <span class="pcoded-mtext">Index</span>
-                </a>
-            </li>
-            <li class=" pcoded-hasmenu">
-                <a href="~/Admin/AddCategorys" class="waves-effect waves-dark">
-                    <span class="pcoded-mtext">Thêm mới thể loại sách</span>
-                </a>
-            </li>
-        </ul>*@
-
-</ul>
-
-
-
-                                                                <ul class="pcoded-item pcoded-left-item">
-                                                                    <li class="pcoded-hasmenu">
-                                                                        <a href="javascript:void(0)" class="waves-effect waves-dark">
-                                                                            <span class="pcoded-micon"><i class="feather icon-sidebar"></i></span>
-                                                                            <span class="pcoded-mtext">Đơn hàng</span>
-                                                                        </a>
-                                                                        
-                                                                </ul>
-                                                                <ul class="pcoded-item pcoded-left-item">
-                                                                    <li class="pcoded-hasmenu">
-                                                                        <a href="javascript:void(0)" class="waves-effect waves-dark">
-                                                                            <span class="pcoded-micon"><i class="feather icon-sidebar"></i></span>
-                                                                            <span class="pcoded-mtext">Thống kê doanh thu</span>
-                                                                        </a>
-                                                                        
-                                                                </ul>
-                                                                <ul class="pcoded-item pcoded-left-item">
-                                                                    <li class="pcoded-hasmenu">
-                                                                        <a href="javascript:void(0)" class="waves-effect waves-dark">
-                                                                            <span class="pcoded-micon"><i class="feather icon-sidebar"></i></span>
-                                                                            <span class="pcoded-mtext">Hỗ trợ</span>
-                                                                        </a>
-                                                                        
-                                                                </ul>
-                                                                <ul class="pcoded-item pcoded-left-item">
-                                                                    <li class="pcoded-hasmenu">
-                                                                        <a href="javascript:void(0)" class="waves-effect waves-dark">
-                                                                            <span class="pcoded-micon"><i class="feather icon-sidebar"></i></span>
-                                                                            <span class="pcoded-mtext">Tin tức</span>
-                                                                        </a>
-                                                                        
-                                                                </ul>
-                                                                <ul class="pcoded-item pcoded-left-item">
-                                                                    <li class="pcoded-hasmenu">
-                                                                        <a href="javascript:void(0)" class="waves-effect waves-dark">
-                                                                            <span class="pcoded-micon"><i class="feather icon-sidebar"></i></span>
-                                                                            <span class="pcoded-mtext">Tác giả</span>
-                                                                        </a>
-                                                                        
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </nav>
-                                                    <div class="pcoded-content">
-                                                        @RenderBody()
-                                                    </div>
-                                                </div>
-                                                <div id="styleSelector">
-                                                </div>
+                <div class="box-content">
+                    <p>Bạn phải đổi mật khẩu và đăng nhập lại.</p>
+                </div>
+                <div class="box-footer">
+                    <a class="btn-login" href="~/Admin/ChangePass?uid=@SessionCheckingServices.userID ">Cập nhật mật khẩu</a>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div id="pcoded" class="pcoded">
+                <div class="pcoded-overlay-box"></div>
+                <div class="pcoded-container navbar-wrapper">
+                    <nav class="navbar header-navbar pcoded-header">
+                        <div class="navbar-wrapper">
+                            <div class="navbar-logo">
+                                <a href="~/Admin/Index">
+                                    <span>ADMIN PAGE</span>
+                                </a>
+                                <a class="mobile-menu" id="mobile-collapse" href="#!">
+                                    <i class="feather icon-menu icon-toggle-right"></i>
+                                </a>
+                                <a class="mobile-options waves-effect waves-light">
+                                    <i class="feather icon-more-horizontal"></i>
+                                </a>
+                            </div>
+                            <div class="navbar-container container-fluid">
+                                <ul class="nav-left">
+                                    <li class="header-search">
+                                        <div class="main-search morphsearch-search">
+                                            <div class="input-group">
+                                                <span class="input-group-prepend search-close">
+                                                    <i class="feather icon-x input-group-text"></i>
+                                                </span>
                                             </div>
                                         </div>
-                                    </div>
-                                </div> }
-                            else
-                            {
-                <div>
-                    <div id="pcoded" class="pcoded">
-                        <div class="pcoded-overlay-box"></div>
-                        <div class="pcoded-container navbar-wrapper">
-                            <nav class="navbar header-navbar pcoded-header">
-                                <div class="navbar-wrapper">
-                                    <div class="navbar-logo">
-                                        <a href="~/Admin/Index">
-                                            <span>ADMIN PAGE</span>
+                                    </li>
+                                    <li>
+                                        <a href="#!" onclick="if (!window.__cfRLUnblockHandlers) return false; javascript:toggleFullScreen()" class="waves-effect waves-light" data-cf-modified-31ecd1c8df647a02aa4d009e-="">
+                                            <i class="full-screen feather icon-maximize"></i>
                                         </a>
-                                        <a class="mobile-menu" id="mobile-collapse" href="#!">
-                                            <i class="feather icon-menu icon-toggle-right"></i>
-                                        </a>
-                                        <a class="mobile-options waves-effect waves-light">
-                                            <i class="feather icon-more-horizontal"></i>
-                                        </a>
-                                    </div>
-                                    <div class="navbar-container container-fluid">
-                                        <ul class="nav-left">
-                                            <li class="header-search">
-                                                <div class="main-search morphsearch-search">
-                                                    <div class="input-group">
-                                                        <span class="input-group-prepend search-close">
-                                                            <i class="feather icon-x input-group-text"></i>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <a href="#!" onclick="if (!window.__cfRLUnblockHandlers) return false; javascript:toggleFullScreen()" class="waves-effect waves-light" data-cf-modified-31ecd1c8df647a02aa4d009e-="">
-                                                    <i class="full-screen feather icon-maximize"></i>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                        <ul class="nav-right">
+                                    </li>
+                                </ul>
+                                <ul class="nav-right">
 
-                                            <li class="user-profile header-notification">
-                                                <div class="dropdown-primary dropdown">
-                                                    @*<div class="dropdown-toggle" data-toggle="dropdown">
-                                                            <img src="~/AdminStyles/Index/files/assets/images/avatar-4.jpg" class="img-radius" alt="User-Profile-Image">
-                                                            <span>John Doe</span>
-                                                            <i class="feather icon-chevron-down"></i>
-                                                        </div>*@
-                                                    @{ Html.RenderAction("_PartialUserInformation", "Admin");}
-                                                    <ul class="show-notification profile-notification dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
-                                                        <li>
-                                                            <a href="https://mail.google.com/mail/u/0/?pli=1#inbox" onclick="window.open(this.href); return false;" onkeypress="window.open(this.href); return false;">
-                                                                <i class="feather icon-mail"></i> Email Shop
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="auth-lock-screen.html">
-                                                                <i class="feather icon-alert-octagon"></i> Change Password
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a onclick="LogOut()">
-                                                                <i class="feather icon-log-out"></i> Logout
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </li>
+                                    <li class="user-profile header-notification">
+                                        <div class="dropdown-primary dropdown">
+                                            @*<div class="dropdown-toggle" data-toggle="dropdown">
+                                                    <img src="~/AdminStyles/Index/files/assets/images/avatar-4.jpg" class="img-radius" alt="User-Profile-Image">
+                                                    <span>John Doe</span>
+                                                    <i class="feather icon-chevron-down"></i>
+                                                </div>*@
+                                            @{ Html.RenderAction("_PartialUserInformation", "Admin");}
+                                            <ul class="show-notification profile-notification dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
+                                                <li>
+                                                    <a href="#">
+                                                        <i class="feather icon-mail"></i> Email Shop
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">
+                                                        <i class="feather icon-alert-octagon"></i> Change Password
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a onclick="LogOut()">
+                                                        <i class="feather icon-log-out"></i> Logout
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </nav>
+
+
+                    <div class="pcoded-main-container">
+                        <div class="pcoded-wrapper">
+                            <nav class="pcoded-navbar">
+                                <div class="nav-list">
+                                    <div class="pcoded-inner-navbar main-menu">
+                                        <div class="pcoded-navigation-label">QUẢN TRỊ</div>
+
+                                        <ul class="pcoded-item pcoded-left-item ">
+                                            <li class="pcoded-hasmenu ">
+                                                <a href="javascript:void(0)" class="waves-effect waves-dark">
+                                                    <span class="pcoded-micon"><i class="feather icon-sidebar"></i></span>
+                                                    <span class="pcoded-mtext">Tài khoản</span>
+                                                </a>
+
+                                        </ul>
+
+                                        <ul class="pcoded-item pcoded-left-item">
+                                            <li class="pcoded-hasmenu">
+                                                <a href="javascript:void(0)" class="waves-effect waves-dark">
+                                                    <span class="pcoded-micon"><i class="feather icon-sidebar"></i></span>
+                                                    <span class="pcoded-mtext">Sách</span>
+                                                </a>
+
+                                        </ul>
+
+
+                                        <ul class="pcoded-item pcoded-left-item">
+                                            <li class="pcoded-hasmenu">
+                                                <a href="javascript:void(0)" class="waves-effect waves-dark">
+                                                    <span class="pcoded-micon"><i class="feather icon-sidebar"></i></span>
+                                                    <span class="pcoded-mtext">Loại sách</span>
+                                                </a>
+
+
+                                        </ul>
+
+
+
+                                        <ul class="pcoded-item pcoded-left-item">
+                                            <li class="pcoded-hasmenu">
+                                                <a href="javascript:void(0)" class="waves-effect waves-dark">
+                                                    <span class="pcoded-micon"><i class="feather icon-sidebar"></i></span>
+                                                    <span class="pcoded-mtext">Đơn hàng</span>
+                                                </a>
+
+                                        </ul>
+                                        <ul class="pcoded-item pcoded-left-item">
+                                            <li class="pcoded-hasmenu">
+                                                <a href="javascript:void(0)" class="waves-effect waves-dark">
+                                                    <span class="pcoded-micon"><i class="feather icon-sidebar"></i></span>
+                                                    <span class="pcoded-mtext">Thống kê doanh thu</span>
+                                                </a>
+
+                                        </ul>
+                                        <ul class="pcoded-item pcoded-left-item">
+                                            <li class="pcoded-hasmenu">
+                                                <a href="javascript:void(0)" class="waves-effect waves-dark">
+                                                    <span class="pcoded-micon"><i class="feather icon-sidebar"></i></span>
+                                                    <span class="pcoded-mtext">Hỗ trợ</span>
+                                                </a>
+
+                                        </ul>
+                                        <ul class="pcoded-item pcoded-left-item">
+                                            <li class="pcoded-hasmenu">
+                                                <a href="javascript:void(0)" class="waves-effect waves-dark">
+                                                    <span class="pcoded-micon"><i class="feather icon-sidebar"></i></span>
+                                                    <span class="pcoded-mtext">Tin tức</span>
+                                                </a>
+
+                                        </ul>
+                                        <ul class="pcoded-item pcoded-left-item">
+                                            <li class="pcoded-hasmenu">
+                                                <a href="javascript:void(0)" class="waves-effect waves-dark">
+                                                    <span class="pcoded-micon"><i class="feather icon-sidebar"></i></span>
+                                                    <span class="pcoded-mtext">Tác giả</span>
+                                                </a>
+
                                         </ul>
                                     </div>
                                 </div>
                             </nav>
+                            <div class="pcoded-content">
+                                @RenderBody()
+                            </div>
+                        </div>
+                        <div id="styleSelector">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        if (SessionCheckingServices.role == 1)
+        {
+            <div>
+                <div id="pcoded" class="pcoded">
+                    <div class="pcoded-overlay-box"></div>
+                    <div class="pcoded-container navbar-wrapper">
+                        <nav class="navbar header-navbar pcoded-header">
+                            <div class="navbar-wrapper">
+                                <div class="navbar-logo">
+                                    <a href="~/Admin/Index">
+                                        <span>ADMIN PAGE</span>
+                                    </a>
+                                    <a class="mobile-menu" id="mobile-collapse" href="#!">
+                                        <i class="feather icon-menu icon-toggle-right"></i>
+                                    </a>
+                                    <a class="mobile-options waves-effect waves-light">
+                                        <i class="feather icon-more-horizontal"></i>
+                                    </a>
+                                </div>
+                                <div class="navbar-container container-fluid">
+                                    <ul class="nav-left">
+                                        <li class="header-search">
+                                            <div class="main-search morphsearch-search">
+                                                <div class="input-group">
+                                                    <span class="input-group-prepend search-close">
+                                                        <i class="feather icon-x input-group-text"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <a href="#!" onclick="if (!window.__cfRLUnblockHandlers) return false; javascript:toggleFullScreen()" class="waves-effect waves-light" data-cf-modified-31ecd1c8df647a02aa4d009e-="">
+                                                <i class="full-screen feather icon-maximize"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    <ul class="nav-right">
+
+                                        <li class="user-profile header-notification">
+                                            <div class="dropdown-primary dropdown">
+                                                @*<div class="dropdown-toggle" data-toggle="dropdown">
+                                                        <img src="~/AdminStyles/Index/files/assets/images/avatar-4.jpg" class="img-radius" alt="User-Profile-Image">
+                                                        <span>John Doe</span>
+                                                        <i class="feather icon-chevron-down"></i>
+                                                    </div>*@
+                                                @{ Html.RenderAction("_PartialUserInformation", "Admin");}
+                                                <ul class="show-notification profile-notification dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
+                                                    <li>
+                                                        <a href="https://mail.google.com/mail/u/0/?pli=1#inbox" onclick="window.open(this.href); return false;" onkeypress="window.open(this.href); return false;">
+                                                            <i class="feather icon-mail"></i> Email Shop
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="auth-lock-screen.html">
+                                                            <i class="feather icon-alert-octagon"></i> Change Password
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a onclick="LogOut()">
+                                                            <i class="feather icon-log-out"></i> Logout
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </nav>
 
 
-                            <div class="pcoded-main-container">
-                                <div class="pcoded-wrapper">
-                                    <nav class="pcoded-navbar">
-                                        <div class="nav-list">
-                                            <div class="pcoded-inner-navbar main-menu">
-                                                <div class="pcoded-navigation-label">QUẢN TRỊ</div>
+                        <div class="pcoded-main-container">
+                            <div class="pcoded-wrapper">
+                                <nav class="pcoded-navbar">
+                                    <div class="nav-list">
+                                        <div class="pcoded-inner-navbar main-menu">
+                                            <div class="pcoded-navigation-label">QUẢN TRỊ</div>
 
-                                                <ul class="pcoded-item pcoded-left-item">
+                                            <ul class="pcoded-item pcoded-left-item">
+                                                <li class="pcoded-hasmenu">
+                                                    <a href="javascript:void(0)" class="waves-effect waves-dark">
+                                                        <span class="pcoded-micon"><i class="feather icon-sidebar"></i></span>
+                                                        <span class="pcoded-mtext">Tài khoản</span>
+                                                    </a>
+                                                    <ul class="pcoded-submenu">
+                                                        <li class=" pcoded-hasmenu">
+                                                            <a href="~/Admin/UsersIndex" class="waves-effect waves-dark">
+                                                                <span class="pcoded-mtext">Tài khoản nhân viên</span>
+                                                            </a>
+                                                        </li>
+                                                        <li class=" pcoded-hasmenu">
+                                                            <a href="~/Admin/CustomersIndex" class="waves-effect waves-dark">
+                                                                <span class="pcoded-mtext">Tài khoản khách hàng</span>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                            </ul>
+
+                                            <ul class="pcoded-item pcoded-left-item">
+                                                <li class="pcoded-hasmenu">
+                                                    <a href="javascript:void(0)" class="waves-effect waves-dark">
+                                                        <span class="pcoded-micon"><i class="feather icon-sidebar"></i></span>
+                                                        <span class="pcoded-mtext">Sách</span>
+                                                    </a>
+                                                    <ul class="pcoded-submenu">
+                                                        <li class=" pcoded-hasmenu">
+                                                            <a href="~/Admin/BooksIndex" class="waves-effect waves-dark">
+                                                                <span class="pcoded-mtext">Danh sách sản phẩm</span>
+                                                            </a>
+                                                        </li>
+
+                                                    </ul>
+                                            </ul>
+
+
+                                            <ul class="pcoded-item pcoded-left-item">
+                                                <li class="pcoded-hasmenu">
+                                                    <a href="javascript:void(0)" class="waves-effect waves-dark">
+                                                        <span class="pcoded-micon"><i class="feather icon-sidebar"></i></span>
+                                                        <span class="pcoded-mtext">Loại sách</span>
+                                                    </a>
+                                                    <ul class="pcoded-submenu">
+                                                        <li class=" pcoded-hasmenu">
+                                                            <a href="~/Admin/CategorysIndex" class="waves-effect waves-dark">
+                                                                <span class="pcoded-mtext">Index</span>
+                                                            </a>
+                                                        </li>
+                                                        <li class=" pcoded-hasmenu">
+                                                            <a href="~/Admin/AddCategorys" class="waves-effect waves-dark">
+                                                                <span class="pcoded-mtext">Thêm mới thể loại sách</span>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+
+                                            </ul>
+
+
+
+                                            <ul class="pcoded-item pcoded-left-item">
+                                                <li class="pcoded-hasmenu">
+                                                    <a href="javascript:void(0)" class="waves-effect waves-dark">
+                                                        <span class="pcoded-micon"><i class="feather icon-sidebar"></i></span>
+                                                        <span class="pcoded-mtext">Đơn hàng</span>
+                                                    </a>
+                                                    <ul class="pcoded-submenu">
+                                                        <li class=" pcoded-hasmenu">
+                                                            <a href="~/Admin/BillsIndex" class="waves-effect waves-dark">
+                                                                <span class="pcoded-mtext">Danh sách đơn hàng</span>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                            </ul>
+                                            <ul class="pcoded-item pcoded-left-item">
+                                                <li class="pcoded-hasmenu">
+                                                    <a href="javascript:void(0)" class="waves-effect waves-dark">
+                                                        <span class="pcoded-micon"><i class="feather icon-sidebar"></i></span>
+                                                        <span class="pcoded-mtext">Thống kê doanh thu</span>
+                                                    </a>
+                                                    <ul class="pcoded-submenu">
+                                                        <li class=" pcoded-hasmenu">
+                                                            <a href="~/Admin/ViewRevenue" class="waves-effect waves-dark">
+                                                                <span class="pcoded-mtext">Xem doanh thu</span>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                            </ul>
+                                            <ul class="pcoded-item pcoded-left-item">
+                                                <li class="pcoded-hasmenu">
+                                                    <a href="javascript:void(0)" class="waves-effect waves-dark">
+                                                        <span class="pcoded-micon"><i class="feather icon-sidebar"></i></span>
+                                                        <span class="pcoded-mtext">Hỗ trợ</span>
+                                                    </a>
+                                                    <ul class="pcoded-submenu">
+                                                        <li class=" pcoded-hasmenu">
+                                                            <a href="~/Admin/Login" class="waves-effect waves-dark">
+                                                                <span class="pcoded-mtext">Index</span>
+                                                            </a>
+                                                        </li>
+                                                        <li class=" pcoded-hasmenu">
+                                                            <a href="javascript:void(0)" class="waves-effect waves-dark">
+                                                                <span class="pcoded-mtext">Insert</span>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                            </ul>
+                                            <ul class="pcoded-item pcoded-left-item">
+                                                <li class="pcoded-hasmenu">
+                                                    <a href="javascript:void(0)" class="waves-effect waves-dark">
+                                                        <span class="pcoded-micon"><i class="feather icon-sidebar"></i></span>
+                                                        <span class="pcoded-mtext">Tin tức</span>
+                                                    </a>
+                                                    <ul class="pcoded-submenu">
+                                                        <li class=" pcoded-hasmenu">
+                                                            <a href="~/Admin/Login" class="waves-effect waves-dark">
+                                                                <span class="pcoded-mtext">Index</span>
+                                                            </a>
+                                                        </li>
+                                                        <li class=" pcoded-hasmenu">
+                                                            <a href="javascript:void(0)" class="waves-effect waves-dark">
+                                                                <span class="pcoded-mtext">Insert</span>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                            </ul>
+                                            <ul class="pcoded-item pcoded-left-item">
+                                                <li class="pcoded-hasmenu">
+                                                    <a href="javascript:void(0)" class="waves-effect waves-dark">
+                                                        <span class="pcoded-micon"><i class="feather icon-sidebar"></i></span>
+                                                        <span class="pcoded-mtext">Tác giả</span>
+                                                    </a>
+                                                    <ul class="pcoded-submenu">
+                                                        <li class=" pcoded-hasmenu">
+                                                            <a href="~/Admin/Login" class="waves-effect waves-dark">
+                                                                <span class="pcoded-mtext">Index</span>
+                                                            </a>
+                                                        </li>
+                                                        <li class=" pcoded-hasmenu">
+                                                            <a href="javascript:void(0)" class="waves-effect waves-dark">
+                                                                <span class="pcoded-mtext">Insert</span>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </nav>
+                                <div class="pcoded-content">
+                                    @RenderBody()
+                                </div>
+                            </div>
+                            <div id="styleSelector">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div>
+                <div id="pcoded" class="pcoded">
+                    <div class="pcoded-overlay-box"></div>
+                    <div class="pcoded-container navbar-wrapper">
+                        <nav class="navbar header-navbar pcoded-header">
+                            <div class="navbar-wrapper">
+                                <div class="navbar-logo">
+                                    <a href="~/Admin/Index">
+                                        <span>ADMIN PAGE</span>
+                                    </a>
+                                    <a class="mobile-menu" id="mobile-collapse" href="#!">
+                                        <i class="feather icon-menu icon-toggle-right"></i>
+                                    </a>
+                                    <a class="mobile-options waves-effect waves-light">
+                                        <i class="feather icon-more-horizontal"></i>
+                                    </a>
+                                </div>
+                                <div class="navbar-container container-fluid">
+                                    <ul class="nav-left">
+                                        <li class="header-search">
+                                            <div class="main-search morphsearch-search">
+                                                <div class="input-group">
+                                                    <span class="input-group-prepend search-close">
+                                                        <i class="feather icon-x input-group-text"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <a href="#!" onclick="if (!window.__cfRLUnblockHandlers) return false; javascript:toggleFullScreen()" class="waves-effect waves-light" data-cf-modified-31ecd1c8df647a02aa4d009e-="">
+                                                <i class="full-screen feather icon-maximize"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    <ul class="nav-right">
+
+                                        <li class="user-profile header-notification">
+                                            <div class="dropdown-primary dropdown">
+                                                @*<div class="dropdown-toggle" data-toggle="dropdown">
+                                                        <img src="~/AdminStyles/Index/files/assets/images/avatar-4.jpg" class="img-radius" alt="User-Profile-Image">
+                                                        <span>John Doe</span>
+                                                        <i class="feather icon-chevron-down"></i>
+                                                    </div>*@
+                                                @{ Html.RenderAction("_PartialUserInformation", "Admin");}
+                                                <ul class="show-notification profile-notification dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
+                                                    <li>
+                                                        <a href="https://mail.google.com/mail/u/0/?pli=1#inbox" onclick="window.open(this.href); return false;" onkeypress="window.open(this.href); return false;">
+                                                            <i class="feather icon-mail"></i> Email Shop
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="auth-lock-screen.html">
+                                                            <i class="feather icon-alert-octagon"></i> Change Password
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a onclick="LogOut()">
+                                                            <i class="feather icon-log-out"></i> Logout
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </nav>
+                        <div class="pcoded-main-container">
+                            <div class="pcoded-wrapper">
+                                <nav class="pcoded-navbar">
+                                    <div class="nav-list">
+                                        <div class="pcoded-inner-navbar main-menu">
+                                            <div class="pcoded-navigation-label">QUẢN TRỊ</div>
+
+                                            @*<ul class="pcoded-item pcoded-left-item">
                                                     <li class="pcoded-hasmenu">
                                                         <a href="javascript:void(0)" class="waves-effect waves-dark">
                                                             <span class="pcoded-micon"><i class="feather icon-sidebar"></i></span>
@@ -347,151 +555,149 @@
                                                                 </a>
                                                             </li>
                                                         </ul>
-                                                </ul>
+                                                </ul>*@
 
-                                                <ul class="pcoded-item pcoded-left-item">
-                                                    <li class="pcoded-hasmenu">
-                                                        <a href="javascript:void(0)" class="waves-effect waves-dark">
-                                                            <span class="pcoded-micon"><i class="feather icon-sidebar"></i></span>
-                                                            <span class="pcoded-mtext">Sách</span>
-                                                        </a>
-                                                        <ul class="pcoded-submenu">
-                                                            <li class=" pcoded-hasmenu">
-                                                                <a href="~/Admin/BooksIndex" class="waves-effect waves-dark">
-                                                                    <span class="pcoded-mtext">Danh sách sản phẩm</span>
-                                                                </a>
-                                                            </li>
+                                            <ul class="pcoded-item pcoded-left-item">
+                                                <li class="pcoded-hasmenu">
+                                                    <a href="javascript:void(0)" class="waves-effect waves-dark">
+                                                        <span class="pcoded-micon"><i class="feather icon-sidebar"></i></span>
+                                                        <span class="pcoded-mtext">Sách</span>
+                                                    </a>
+                                                    <ul class="pcoded-submenu">
+                                                        <li class=" pcoded-hasmenu">
+                                                            <a href="~/Admin/BooksIndex" class="waves-effect waves-dark">
+                                                                <span class="pcoded-mtext">Danh sách sản phẩm</span>
+                                                            </a>
+                                                        </li>
 
-                                                        </ul>
-                                                </ul>
-
-
-                                                <ul class="pcoded-item pcoded-left-item">
-                                                    <li class="pcoded-hasmenu">
-                                                        <a href="javascript:void(0)" class="waves-effect waves-dark">
-                                                            <span class="pcoded-micon"><i class="feather icon-sidebar"></i></span>
-                                                            <span class="pcoded-mtext">Loại sách</span>
-                                                        </a>
-                                                        <ul class="pcoded-submenu">
-                                                            <li class=" pcoded-hasmenu">
-                                                                <a href="~/Admin/CategorysIndex" class="waves-effect waves-dark">
-                                                                    <span class="pcoded-mtext">Index</span>
-                                                                </a>
-                                                            </li>
-                                                            <li class=" pcoded-hasmenu">
-                                                                <a href="~/Admin/AddCategorys" class="waves-effect waves-dark">
-                                                                    <span class="pcoded-mtext">Thêm mới thể loại sách</span>
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-
-                                                </ul>
+                                                    </ul>
+                                            </ul>
 
 
-
-                                                <ul class="pcoded-item pcoded-left-item">
-                                                    <li class="pcoded-hasmenu">
-                                                        <a href="javascript:void(0)" class="waves-effect waves-dark">
-                                                            <span class="pcoded-micon"><i class="feather icon-sidebar"></i></span>
-                                                            <span class="pcoded-mtext">Đơn hàng</span>
-                                                        </a>
-                                                        <ul class="pcoded-submenu">
-                                                            <li class=" pcoded-hasmenu">
-                                                                <a href="~/Admin/BillsIndex" class="waves-effect waves-dark">
-                                                                    <span class="pcoded-mtext">Danh sách đơn hàng</span>
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                </ul>
-                                                <ul class="pcoded-item pcoded-left-item">
-                                                    <li class="pcoded-hasmenu">
-                                                        <a href="javascript:void(0)" class="waves-effect waves-dark">
-                                                            <span class="pcoded-micon"><i class="feather icon-sidebar"></i></span>
-                                                            <span class="pcoded-mtext">Thống kê doanh thu</span>
-                                                        </a>
-                                                        <ul class="pcoded-submenu">
-                                                            <li class=" pcoded-hasmenu">
-                                                                <a href="~/Admin/ViewRevenue" class="waves-effect waves-dark">
-                                                                    <span class="pcoded-mtext">Xem doanh thu</span>
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                </ul>
-                                                <ul class="pcoded-item pcoded-left-item">
-                                                    <li class="pcoded-hasmenu">
-                                                        <a href="javascript:void(0)" class="waves-effect waves-dark">
-                                                            <span class="pcoded-micon"><i class="feather icon-sidebar"></i></span>
-                                                            <span class="pcoded-mtext">Hỗ trợ</span>
-                                                        </a>
-                                                        <ul class="pcoded-submenu">
-                                                            <li class=" pcoded-hasmenu">
-                                                                <a href="~/Admin/Login" class="waves-effect waves-dark">
-                                                                    <span class="pcoded-mtext">Index</span>
-                                                                </a>
-                                                            </li>
-                                                            <li class=" pcoded-hasmenu">
-                                                                <a href="javascript:void(0)" class="waves-effect waves-dark">
-                                                                    <span class="pcoded-mtext">Insert</span>
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                </ul>
-                                                <ul class="pcoded-item pcoded-left-item">
-                                                    <li class="pcoded-hasmenu">
-                                                        <a href="javascript:void(0)" class="waves-effect waves-dark">
-                                                            <span class="pcoded-micon"><i class="feather icon-sidebar"></i></span>
-                                                            <span class="pcoded-mtext">Tin tức</span>
-                                                        </a>
-                                                        <ul class="pcoded-submenu">
-                                                            <li class=" pcoded-hasmenu">
-                                                                <a href="~/Admin/Login" class="waves-effect waves-dark">
-                                                                    <span class="pcoded-mtext">Index</span>
-                                                                </a>
-                                                            </li>
-                                                            <li class=" pcoded-hasmenu">
-                                                                <a href="javascript:void(0)" class="waves-effect waves-dark">
-                                                                    <span class="pcoded-mtext">Insert</span>
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                </ul>
-                                                <ul class="pcoded-item pcoded-left-item">
-                                                    <li class="pcoded-hasmenu">
-                                                        <a href="javascript:void(0)" class="waves-effect waves-dark">
-                                                            <span class="pcoded-micon"><i class="feather icon-sidebar"></i></span>
-                                                            <span class="pcoded-mtext">Tác giả</span>
-                                                        </a>
-                                                        <ul class="pcoded-submenu">
-                                                            <li class=" pcoded-hasmenu">
-                                                                <a href="~/Admin/Login" class="waves-effect waves-dark">
-                                                                    <span class="pcoded-mtext">Index</span>
-                                                                </a>
-                                                            </li>
-                                                            <li class=" pcoded-hasmenu">
-                                                                <a href="javascript:void(0)" class="waves-effect waves-dark">
-                                                                    <span class="pcoded-mtext">Insert</span>
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                </ul>
-                                            </div>
+                                            <ul class="pcoded-item pcoded-left-item">
+                                                <li class="pcoded-hasmenu">
+                                                    <a href="javascript:void(0)" class="waves-effect waves-dark">
+                                                        <span class="pcoded-micon"><i class="feather icon-sidebar"></i></span>
+                                                        <span class="pcoded-mtext">Loại sách</span>
+                                                    </a>
+                                                    <ul class="pcoded-submenu">
+                                                        <li class=" pcoded-hasmenu">
+                                                            <a href="~/Admin/CategorysIndex" class="waves-effect waves-dark">
+                                                                <span class="pcoded-mtext">Index</span>
+                                                            </a>
+                                                        </li>
+                                                        <li class=" pcoded-hasmenu">
+                                                            <a href="~/Admin/AddCategorys" class="waves-effect waves-dark">
+                                                                <span class="pcoded-mtext">Thêm mới thể loại sách</span>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                            </ul>
+                                            <ul class="pcoded-item pcoded-left-item">
+                                                <li class="pcoded-hasmenu">
+                                                    <a href="javascript:void(0)" class="waves-effect waves-dark">
+                                                        <span class="pcoded-micon"><i class="feather icon-sidebar"></i></span>
+                                                        <span class="pcoded-mtext">Đơn hàng</span>
+                                                    </a>
+                                                    <ul class="pcoded-submenu">
+                                                        <li class=" pcoded-hasmenu">
+                                                            <a href="~/Admin/BillsIndex" class="waves-effect waves-dark">
+                                                                <span class="pcoded-mtext">Danh sách đơn hàng</span>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                            </ul>
+                                            <ul class="pcoded-item pcoded-left-item">
+                                                <li class="pcoded-hasmenu">
+                                                    <a href="javascript:void(0)" class="waves-effect waves-dark">
+                                                        <span class="pcoded-micon"><i class="feather icon-sidebar"></i></span>
+                                                        <span class="pcoded-mtext">Thống kê doanh thu</span>
+                                                    </a>
+                                                    <ul class="pcoded-submenu">
+                                                        <li class=" pcoded-hasmenu">
+                                                            <a href="~/Admin/ViewRevenue" class="waves-effect waves-dark">
+                                                                <span class="pcoded-mtext">Xem doanh thu</span>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                            </ul>
+                                            <ul class="pcoded-item pcoded-left-item">
+                                                <li class="pcoded-hasmenu">
+                                                    <a href="javascript:void(0)" class="waves-effect waves-dark">
+                                                        <span class="pcoded-micon"><i class="feather icon-sidebar"></i></span>
+                                                        <span class="pcoded-mtext">Hỗ trợ</span>
+                                                    </a>
+                                                    <ul class="pcoded-submenu">
+                                                        <li class=" pcoded-hasmenu">
+                                                            <a href="~/Admin/Login" class="waves-effect waves-dark">
+                                                                <span class="pcoded-mtext">Index</span>
+                                                            </a>
+                                                        </li>
+                                                        <li class=" pcoded-hasmenu">
+                                                            <a href="javascript:void(0)" class="waves-effect waves-dark">
+                                                                <span class="pcoded-mtext">Insert</span>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                            </ul>
+                                            <ul class="pcoded-item pcoded-left-item">
+                                                <li class="pcoded-hasmenu">
+                                                    <a href="javascript:void(0)" class="waves-effect waves-dark">
+                                                        <span class="pcoded-micon"><i class="feather icon-sidebar"></i></span>
+                                                        <span class="pcoded-mtext">Tin tức</span>
+                                                    </a>
+                                                    <ul class="pcoded-submenu">
+                                                        <li class=" pcoded-hasmenu">
+                                                            <a href="~/Admin/Login" class="waves-effect waves-dark">
+                                                                <span class="pcoded-mtext">Index</span>
+                                                            </a>
+                                                        </li>
+                                                        <li class=" pcoded-hasmenu">
+                                                            <a href="javascript:void(0)" class="waves-effect waves-dark">
+                                                                <span class="pcoded-mtext">Insert</span>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                            </ul>
+                                            <ul class="pcoded-item pcoded-left-item">
+                                                <li class="pcoded-hasmenu">
+                                                    <a href="javascript:void(0)" class="waves-effect waves-dark">
+                                                        <span class="pcoded-micon"><i class="feather icon-sidebar"></i></span>
+                                                        <span class="pcoded-mtext">Tác giả</span>
+                                                    </a>
+                                                    <ul class="pcoded-submenu">
+                                                        <li class=" pcoded-hasmenu">
+                                                            <a href="~/Admin/Login" class="waves-effect waves-dark">
+                                                                <span class="pcoded-mtext">Index</span>
+                                                            </a>
+                                                        </li>
+                                                        <li class=" pcoded-hasmenu">
+                                                            <a href="javascript:void(0)" class="waves-effect waves-dark">
+                                                                <span class="pcoded-mtext">Insert</span>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                            </ul>
                                         </div>
-                                    </nav>
-                                    <div class="pcoded-content">
-                                        @RenderBody()
                                     </div>
+                                </nav>
+                                <div class="pcoded-content">
+                                    @RenderBody()
                                 </div>
-                                <div id="styleSelector">
-                                </div>
+                            </div>
+                            <div id="styleSelector">
                             </div>
                         </div>
                     </div>
-                </div>}
+                </div>
+            </div>
+        }
+    }
 
     <script data-cfasync="false" src="~/AdminStyles/Index/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
-    <script type="31ecd1c8df647a02aa4d009e-text/javascript" src="~/AdminStyles/Index/files/bower_components/jquery/js/jquery.min.js"></script>
-    <script type="31ecd1c8df647a02aa4d009e-text/javascript" src="~/AdminStyles/Index/files/bower_components/jquery-ui/js/jquery-ui.min.js"></script>
-    <script type="31ecd1c8df647a02aa4d009e-text/javascript" src="~/AdminStyles/Index/files/bower_components/popper.js/js/popper.min.js"></script>
+    <script src="~/AdminStyles/Index/files/bower_components/jquery/js/jquery.min.js"></script>
+    <script src="~/AdminStyles/Index/files/bower_components/jquery-ui/js/jquery-ui.min.js"></script>
+    <script src="~/AdminStyles/Index/files/bower_components/popper.js/js/popper.min.js"></script>
     <script type="31ecd1c8df647a02aa4d009e-text/javascript" src="~/AdminStyles/Index/files/bower_components/bootstrap/js/bootstrap.min.js"></script>
     <script src="~/AdminStyles/Index/files/assets/pages/waves/js/waves.min.js" type="31ecd1c8df647a02aa4d009e-text/javascript"></script>
     <script type="31ecd1c8df647a02aa4d009e-text/javascript" src="~/AdminStyles/Index/files/bower_components/jquery-slimscroll/js/jquery.slimscroll.js"></script>
@@ -512,7 +718,6 @@
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
-
         gtag('config', 'UA-23581568-13');
     </script>
     <script type="text/javascript">
@@ -520,9 +725,7 @@
             $('.btn-close').click(function (event) {
                 $('.box-note').addClass('box-close');
                 $('div.background-blurry').addClass('box-close');
-                
             })
-
         });
 
         function LogOut() {
@@ -540,7 +743,7 @@
             })
 
         }
-        
+
     </script>
     <script src="~/AdminStyles/Index/ajax.cloudflare.com/cdn-cgi/scripts/a2bd7673/cloudflare-static/rocket-loader.min.js" data-cf-settings="31ecd1c8df647a02aa4d009e-|49" defer=""></script>
 </body>

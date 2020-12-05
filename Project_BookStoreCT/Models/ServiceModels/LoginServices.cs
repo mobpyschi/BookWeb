@@ -13,14 +13,17 @@ namespace Project_BookStoreCT.Models.ServiceModels
         {
             using(DataContext db =new DataContext())
             {
-                var checkLogin = db.Users.Where(x => x.email == email && x.password == password).FirstOrDefault();
+                var roles = (from u in db.Users where u.email == email select new { u.role}).FirstOrDefault();
+                var checkLogin = db.Users.Where(x => x.email == email && x.password == password && x.role== roles.role).FirstOrDefault();
                 if (checkLogin != null)
                 {
+                   
+
                     if (checkRemember == true)
                     {
                         FormsAuthentication.SetAuthCookie(checkLogin.User_ID.ToString(), true);
                     }
-                    SessionCheckingServices.Session(checkLogin.User_ID, checkLogin.avatar, checkLogin.userName, checkLogin.password);
+                    SessionCheckingServices.Session(checkLogin.User_ID, checkLogin.avatar, checkLogin.userName, checkLogin.password,checkLogin.role);
                     return true;
                 }
                 return false;

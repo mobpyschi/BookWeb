@@ -6,7 +6,10 @@
             $('.box-note').addClass('box-open');
             $('div.background-blurry').addClass('box-open');
         })
-
+        $('.btn-close').click(function (event) {
+            $('.box-note').removeClass('box-open');
+            $('div.background-blurry').removeClass('box-open');
+        })
         
     });
 

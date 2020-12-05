@@ -68,7 +68,7 @@ namespace Project_BookStoreCT.Controllers
                 FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(authCookie.Value);
                 var getUserIDFromCookie = int.Parse(ticket.Name);
                 var getUser = (from user in db.Users where user.User_ID == getUserIDFromCookie select user).FirstOrDefault();
-                SessionCheckingServices.Session(getUser.User_ID, getUser.avatar,getUser.userName,getUser.password);
+                SessionCheckingServices.Session(getUser.User_ID, getUser.avatar,getUser.userName,getUser.password, getUser.role);
                 return PartialView("_PartialUserInformation");
             }
             return PartialView("_PartialUserInformation");
@@ -95,7 +95,7 @@ namespace Project_BookStoreCT.Controllers
                 FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(authCookie.Value);
                 var getUserIDFromCookie = int.Parse(ticket.Name);
                 var getUser = (from user in db.Users where user.User_ID == getUserIDFromCookie select user).FirstOrDefault();
-                SessionCheckingServices.Session(getUser.User_ID, getUser.avatar,getUser.userName,getUser.password);
+                SessionCheckingServices.Session(getUser.User_ID, getUser.avatar,getUser.userName,getUser.password,getUser.role);
                 return View();
             }
         }
@@ -241,9 +241,16 @@ namespace Project_BookStoreCT.Controllers
                         u.email = user.email;
                         u.phoneNumber = user.phone;
                         u.role = user.role;
-                        u.avatar = "default-avatar.png";
                         u.password = Encode.CreateMD5(user.password);
                         u.sex = Convert.ToBoolean(user.sex);
+                        if (Convert.ToBoolean(user.sex) == true)
+                        {
+                            u.avatar = "avt_men.jpg ";
+                        }
+                        else
+                        {
+                            u.avatar = "avt_girl.jpg";
+                        }
                         u.address = user.address;
                         u.dayOfBirth = DateTime.Now;
                         db.Users.Add(u);
@@ -305,6 +312,14 @@ namespace Project_BookStoreCT.Controllers
                     u.phoneNumber = user.phone;
                     u.role = user.role;       
                     u.sex = Convert.ToBoolean(user.sex);
+                    if (Convert.ToBoolean(user.sex) == true)
+                    {
+                        u.avatar = "avt_men.jpg ";
+                    }
+                    else
+                    {
+                        u.avatar = "avt_girl.jpg";
+                    }
                     u.address = user.address;
                     db.SaveChanges();
                     return Json(new { mess_ = 1 });

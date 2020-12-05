@@ -13,13 +13,17 @@ namespace Project_BookStoreCT.Models.ServiceModels
         public static string userName { get; set; }
         public static string avatar { get; set; }
         public static string password { get; set; }
-        public static void Session(int userID, string avatar, string username, string password)
+        public static int? role { get; set; }
+        public static void Session(int userID, string avatar, string username, string password, int? role)
         {
             SessionCheckingServices.userID = userID;
             SessionCheckingServices.avatar = avatar;
             SessionCheckingServices.userName = username;
             SessionCheckingServices.password = password;
+            SessionCheckingServices.role = role;
         }
+
+        
     }
      
 

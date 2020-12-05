@@ -68,7 +68,7 @@
                                             <td>@b.customerAddress</td>
                                             <td>@b.phoneNumber</td>
                                             <td>@b.date_set</td>
-                                            @if (b.isPayment == true)
+                                            @if (b.payment_status == true)
                                             {
                                                 <td>Đã thanh toán</td>
                                             }
@@ -76,7 +76,7 @@
                                             {
                                                 <td>Chưa thanh toán</td>
                                             }
-                                            @if (b.isDelivered == true)
+                                            @if (b.delivered_status == true)
                                             {
                                                     <td style="color:forestgreen"> Đã duyệt</td>
                                             }

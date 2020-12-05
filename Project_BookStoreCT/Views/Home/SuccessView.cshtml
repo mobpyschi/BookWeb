@@ -40,25 +40,47 @@ else
                                 <tbody>
                                     @foreach (DetailBills_ViewModels bill in Model)
                                     {
-                                        <tr>
-                                            <td>@bill.bookName</td>
-                                            <td>@bill.quantity</td>
-                                            <td>@bill.price USD</td>
-                                            <td>@bill.customerName</td>
-                                            <td>@bill.phone</td>
-                                            @if (bill.payment_method == 1)
-                                            {
-                                                <td style="text-align:right"> Thanh toan COD</td>
-                                            }
-                                            else
-                                            {
-                                                <td style="text-align:right"> Thanh toan PayPal</td>
-                                            }
-                                            
-                                        </tr>
+                                        if (bill.statusSaleOff == true)
+                                        {
+                                            <tr>
+                                                <td>@bill.bookName</td>
+                                                <td>@bill.quantity</td>
+                                                <td>@bill.saleOffPrice USD</td>
+                                                <td>@bill.customerName</td>
+                                                <td>@bill.phone</td>
+                                                @if (bill.payment_method == 1)
+                                                {
+                                                    <td style="text-align:right"> Thanh toan COD</td>
+                                                }
+                                                else
+                                                {
+                                                    <td style="text-align:right"> Thanh toan PayPal</td>
+                                                }
+
+                                            </tr>
+                                        }
+                                        else
+                                        {
+                                            <tr>
+                                                <td>@bill.bookName</td>
+                                                <td>@bill.quantity</td>
+                                                <td>@bill.price USD</td>
+                                                <td>@bill.customerName</td>
+                                                <td>@bill.phone</td>
+                                                @if (bill.payment_method == 1)
+                                                {
+                                                    <td style="text-align:right"> Thanh toan COD</td>
+                                                }
+                                                else
+                                                {
+                                                    <td style="text-align:right"> Thanh toan PayPal</td>
+                                                }
+                                            </tr>
+                                        }
+
                                     }
-                                    <tr ><td colspan="6" class="product-subtotal"><b>Tổng tiền:</b>@Session["ThanhTien"] USD</td></tr>
-                                    </tbody>
+                                    <tr><td colspan="6" class="product-subtotal" style="font-size:2rem"><b>Tổng tiền: </b>@Session["ThanhTien"] USD</td></tr>
+                                </tbody>
                                 
                                 </table>
                             

@@ -467,6 +467,8 @@ namespace Project_BookStoreCT.Controllers
                            where d.Book_ID == b.Book_ID && d.Bill_ID == bill_id_max
                                 select new
                            {
+                               b.statusSaleOff,
+                               b.saleOffPrice,
                                b.bookName,
                                b.image,
                                d.quantity,
@@ -489,6 +491,8 @@ namespace Project_BookStoreCT.Controllers
                     detailBills.phone = b.phoneNumber;
                     detailBills.total = (double)b.total;
                     detailBills.payment_method = (int)b.payment_method;
+                    detailBills.saleOffPrice = b.saleOffPrice;
+                    detailBills.statusSaleOff = b.statusSaleOff;
                     detailsBill.Add(detailBills);
                 }
                
