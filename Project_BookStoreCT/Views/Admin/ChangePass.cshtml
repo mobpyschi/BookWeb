@@ -118,13 +118,13 @@ else
                 processData: false,
                 data: formData
             }).done(function (data) {
-                if (data.mes_check == 0) {
-                    alert("Đổi mật khẩu thất bại")
+                if (data.mes_check == "1") {
+                    alert("Đổi mật khẩu thành công")
 
                 }
                 else {
-                    alert("Đổi mật khẩu thành công")
-                    location.href = '/Admin/Login'
+                    alert("Đổi mật khẩu thất bại")
+                    
                 }
             })
         }

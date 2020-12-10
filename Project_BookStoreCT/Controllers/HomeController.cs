@@ -375,7 +375,41 @@ namespace Project_BookStoreCT.Controllers
                             db.DetailBills.Add(detailBill);
                             db.SaveChanges();
                         }
-                       
+                        foreach (var item in (List<Cart_ViewModels>)Session["Cart"])
+                        {
+                            Book b = db.Books.Where(x => x.Book_ID == item.book_id).FirstOrDefault();
+                            if( b != null)
+                            {
+                                if (b.sellNumber == null)
+                                {
+                                    b.sellNumber = item.number;
+                                    db.SaveChanges();
+                                }
+                                else
+                                {
+                                    b.sellNumber = b.sellNumber + item.number;
+                                    db.SaveChanges();
+                                }
+                                
+                            }
+                            
+                            
+                        }
+                        foreach (var item in (List<Cart_ViewModels>)Session["Cart"])
+                        {
+                            int? quantityExist = 0;
+                            var quantity = (from bo in db.Books where bo.Book_ID == item.book_id select new { bo.quantityExists }).ToList();
+                            Book b = db.Books.Where(x => x.Book_ID == item.book_id).FirstOrDefault();
+                            foreach (var sl in quantity)
+                            {
+                                quantityExist = (sl.quantityExists - item.number);
+                            }
+                            b.quantityExists = quantityExist;
+                            db.SaveChanges();
+
+                        }
+
+
                         Session["Cart"] = null;
                         return RedirectToAction("SuccessView");
                     }
@@ -402,7 +436,20 @@ namespace Project_BookStoreCT.Controllers
                             db.DetailBills.Add(detailBill);
                             db.SaveChanges();
                         }
-                        
+
+                        foreach (var item in (List<Cart_ViewModels>)Session["Cart"])
+                        {
+                            int quantityExist = 0;
+                            var quantity = (from bo in db.Books where bo.Book_ID == item.book_id select new { bo.quantityExists }).ToList();
+                            Book b = db.Books.Where(x => x.Book_ID == item.book_id).FirstOrDefault();
+                            foreach (var sl in quantity)
+                            {
+                                quantityExist = (int)(sl.quantityExists - item.number);
+                            }
+                            b.quantityExists = quantityExist;
+                            db.Books.Add(b);
+                            db.SaveChanges();
+                        }
                         return RedirectToAction("PaymentWithPaypal");
                     }
                     
@@ -485,7 +532,7 @@ namespace Project_BookStoreCT.Controllers
                     DetailBills_ViewModels detailBills = new DetailBills_ViewModels();
                     detailBills.bookName = b.bookName;
                     detailBills.image = b.image;
-                    detailBills.quantity = b.quantity;
+                    detailBills.quantity = (int)b.quantity;
                     detailBills.price = b.price;
                     detailBills.customerName = b.customerName;
                     detailBills.phone = b.phoneNumber;

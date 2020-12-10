@@ -90,7 +90,7 @@
         var phantram = $("#dropPhanTram option:selected").val()
         var giakhuyenmai = $("#txtGiaKhuyenMai").val;
         var ketqua = dongia - ((dongia * phantram) / 100);
-        $("#txtGiaKhuyenMai").val(parseInt(ketqua, 10));
+        $("#txtGiaKhuyenMai").val(parseFloat(ketqua).toFixed(2));
     }
     function SaleOff(bid) {   
         //$.ajax({
@@ -120,7 +120,8 @@
                 }
             }).done(function (data) {
                 if (data.mess_ == 1) {
-                    swal("Áp dụng khuyến mãi thành công");
+                    swal("Áp dụng khuyến mãi thành công")
+                    location.href = '/Admin/BooksIndex'
                 }
                 else {
                     swal("Áp dụng khuyến mãi thất bại");

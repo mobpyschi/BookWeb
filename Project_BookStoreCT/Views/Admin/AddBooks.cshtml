@@ -167,7 +167,8 @@ else
                 data: formData
             }).done(function (data) {
                 if (data.mess_ == 1) {
-                    swal("Thêm thành công");
+                    swal("Thêm thành công")
+                    location.href = '/Admin/BooksIndex'
                 }
                 else {
                     swal("Thêm thất bại");

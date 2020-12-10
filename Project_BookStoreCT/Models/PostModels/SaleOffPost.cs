@@ -9,6 +9,6 @@ namespace Project_BookStoreCT.Models.PostModels
     {
         public int ? book_id { get; set; }
         public int statusSaleOff { get; set; }
-        public int priceSaleOff { get; set; }
+        public double priceSaleOff { get; set; }
     }
 }

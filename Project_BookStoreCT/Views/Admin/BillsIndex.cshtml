@@ -34,7 +34,7 @@
                 <div class="col-md-12">
                     <div class="card table-card">
                         <div class="card-header">
-                            <h5>User Index</h5>
+                            <h5>Danh sách đơn hàng</h5>
                             <div class="card-header-right">
                                 <ul class="list-unstyled card-option">
                                     <li class="first-opt"><i class="feather icon-chevron-left open-card-option"></i></li>
@@ -88,6 +88,7 @@
                                             <td>@b.total VNĐ</td>    
                                             <td>
                                                 <input type="button" onclick="Detail(@b.Bill_ID)" class="btn btn-primary" value="Chi tiết hóa đơn" />
+                                                <input type="button" onclick="Accept(@b.Bill_ID,this)" class="btn btn-success" value="Duyệt đơn hàng" />
                                                 <input type="button" onclick="Delete(@b.Bill_ID,this)" class="btn btn-danger" value="Xóa" />
                                             </td>
                                         </tr>
@@ -110,6 +111,46 @@
     });
     function Detail(bid) {
         location.href = './DetailBills?bid=' + bid;
+    }
+    function Accept(bid) {
+        swal({
+            title: "Duyệt đơn hàng này?",
+            type: "info",
+            showCancelButton: true,
+            confirmButtonClass: "btn-info",
+            confirmButtonText: "Duyệt",
+            cancelButtonText: "Huỷ",
+            closeOnConfirm: false,
+            closeOnCancel: false
+        },
+            function (isConfirm) {
+                if (isConfirm) {
+                    $.ajax({
+                        url: "/Admin/AcceptBill",
+                        method: "POST",
+                        dataType: "json",
+                        data: {
+                            'bid': bid
+                        },
+                    }).done(function (data) {
+                        if (data.mess_ == "1") {
+                            swal({
+                                title: "Đã duyệt",
+                                type: "success",
+                                timer: 3000
+                                
+                            },
+                            function () {
+                                location.href = '/Admin/BillsIndex'
+                            });
+                        }
+                        else {
+                            swal("Duyệt thất bại");
+                        }
+                    });
+                } 
+            });
+    
     }
     function Delete(bid, e) {
         swal({

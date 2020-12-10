@@ -9,7 +9,7 @@ namespace Project_BookStoreCT.Models.ViewModels
     {
         public string bookName { get; set; }
         public string image { get; set; }  
-        public int ? quantity { get; set; }
+        public int  quantity { get; set; }
         public string customerName { get; set; }
         public string phone { get; set; }
         public double total { get; set; }
@@ -17,5 +17,6 @@ namespace Project_BookStoreCT.Models.ViewModels
         public int payment_method { get; set; }
         public double? saleOffPrice { get; set; }
         public bool? statusSaleOff { get; set; }
+        public string categoryName { get; set; }
     }
 }

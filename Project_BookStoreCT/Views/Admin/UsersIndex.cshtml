@@ -44,7 +44,7 @@
                             </div>
                         </div>
                         <div class="card-block p-b-0">
-                            <a href="~/Admin/AddNewUsers"  style="color:white;margin-left:15px;margin-top:20px;margin-bottom:35px;" class="btn btn-success">Thêm mới</a>
+                            <a href="~/Admin/AddNewUsers" style="color:white;margin-left:15px;margin-top:20px;margin-bottom:35px;" class="btn btn-success">Thêm mới</a>
                             <div class="table-responsive  ">
                                 <table id="dtBasicExample" class="table table-hover m-b-1 table-striped table-bordered  table-md">
                                     <thead>
@@ -102,7 +102,7 @@
     function updateUser(user_id) {
         location.href = './UpdateUsers?uid=' + user_id;
     }
-   
+
     function deleteUser(user_id, e) {
         swal({
             title: "Bạn chắc chắn muốn xóa",
@@ -142,6 +142,52 @@
                     });
                 } else {
                     swal("An toàn là trên hết.");
+                }
+            });
+    }
+    function resetPass(user_id, e) {
+        swal({
+            title: "Reset Password?",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonClass: "btn-danger",
+            confirmButtonText: "Reset",
+            cancelButtonText: "Cancel",
+            closeOnConfirm: false,
+            closeOnCancel: false
+        },
+            function (isConfirm) {
+                if (isConfirm) {
+                    $.ajax({
+                        url: "/Admin/ResetPass",
+                        method: "POST",
+                        dataType: "json",
+                        data: {
+                            'uid': user_id
+                        },
+                    }).done(function (data) {
+                        if (data.res_check == "1") {
+                            swal({
+                                title: "Reset successful",
+                                type: "success",
+                                timer: 3000
+                            },
+                                function () {
+                                    location.href = '/Admin/UsersIndex'
+                                });
+                        }
+                        else {
+                            swal({
+                                title: "Reset Fail",
+                                type: "error",
+                                timer: 3000
+                            },
+                                function () {
+                                    location.href = '/Admin/UsersIndex'
+                                });
+                        }
+
+                    });
                 }
             });
     }

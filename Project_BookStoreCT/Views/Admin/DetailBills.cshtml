@@ -46,7 +46,7 @@
                         </div>
                         <div class="card-block p-b-0">                      
                             <div class="table-responsive">
-                                <table id="dtBasicExample" class="table table-hover m-b-0 table-striped table-bordered table-sm">
+                                <table id="dtBasicExample" class="table table-hover table-striped table-bordered table-responsive table-sm">
                                     <thead>
                                         <tr>
                                             <th>Tên sách</th>
@@ -62,9 +62,10 @@
                                         {
                                             <tr>
                                                 <td>@d.bookName</td>
-                                                <td>@d.</td>
+                                                <td>@d.categoryName</td>
                                                 <td><img src="~/imgs/@d.image" style="width:75px;height:100px;"/></td>
                                                 <td>@d.quantity</td>
+                                                <td>@d.price USD</td>
                                             </tr>
                                         }
                                     </tbody>

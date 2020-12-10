@@ -157,11 +157,29 @@ namespace Project_BookStoreCT.Controllers
                 {
                     return Json(new { mes_check = 0 });
                 }
+            }
+        }
+        public ActionResult ResetPass(int? uid)
+        {
+            using (DataContext db = new DataContext())
+            {
+                string pass = "123";
+                User c = db.Users.Where(x => x.User_ID == uid).FirstOrDefault();
+                if (c != null)
+                {
+                    c.password = Encode.CreateMD5(pass);
+                    db.SaveChanges();
+                    return Json(new { res_check = 1 });
+                }
+                else
+                {
+                    return Json(new { res_check = 0 });
+                }
 
 
             }
         }
-            public ActionResult CustomersIndex()
+        public ActionResult CustomersIndex()
         {
             using (DataContext db = new DataContext())
             {
@@ -336,6 +354,24 @@ namespace Project_BookStoreCT.Controllers
                     db.Users.Remove(u);
                     db.SaveChanges();
                     return Json(new { mess_ = 1 });
+                }
+                else
+                {
+                    return PartialView("_Partial404NotFoundAdmin");
+                }
+            }
+        }
+
+        public ActionResult DeleteCus(int? cid)
+        {
+            using (DataContext db = new DataContext())
+            {
+                if (cid != null)
+                {
+                    Customer u = db.Customers.Find(cid);
+                    db.Customers.Remove(u);
+                    db.SaveChanges();
+                    return Json(new { mess__ = 1 });
                 }
                 else
                 {
@@ -633,7 +669,7 @@ namespace Project_BookStoreCT.Controllers
                 }
             }
         }
-        public ActionResult CategoriesIndex()
+        public ActionResult CategorysIndex()
         {
             using (DataContext db = new DataContext())
             {
@@ -766,6 +802,24 @@ namespace Project_BookStoreCT.Controllers
                 return Json(new { mess_ = 1 });
             }
         }
+        public ActionResult AcceptBill(int? bid)
+        {
+            using (DataContext db = new DataContext())
+            {
+                Bill bi = db.Bills.Where(x => x.Bill_ID == bid).FirstOrDefault();
+                if( bi != null)
+                {
+                    bi.delivered_status = true;
+                    db.SaveChanges();
+                    return Json(new { mess_ = 1 });
+                }
+                else
+                {
+                    return Json(new { mess_ = 0 });
+                }
+                
+            }
+        }
         public ActionResult DetailBills(int ? bid)
         {
             using (DataContext db = new DataContext())
@@ -775,15 +829,19 @@ namespace Project_BookStoreCT.Controllers
                     var detailBill = (from d in db.DetailBills
                                       join b in db.Books
                                       on d.Book_ID equals b.Book_ID
+                                      join c in db.Categories
+                                      on b.category_id equals c.Category_ID
                                       where d.Bill_ID == bid
-                                      select new { d.quantity ,b.price , b.bookName, b.image }).ToList();
+                                      select new { d.quantity, c.categoryName ,b.price , b.bookName, b.image }).ToList();
                     List<DetailBills_ViewModels> details = new List<DetailBills_ViewModels>();
                     foreach(var d in detailBill)
                     {
                         DetailBills_ViewModels detail = new DetailBills_ViewModels();
                         detail.bookName = d.bookName;
+                        detail.categoryName = d.categoryName;
                         detail.image = d.image;                
-                        detail.quantity = d.quantity;
+                        detail.quantity = (int)d.quantity;
+                        detail.price = d.price;
                         details.Add(detail);
                     }
                     return View(details);

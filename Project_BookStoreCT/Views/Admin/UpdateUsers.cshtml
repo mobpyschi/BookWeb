@@ -127,8 +127,15 @@
                 data: formData
             }).done(function (data) {
                 if (data.mess_ == 1) {
-                    swal("Sửa thành công")
-                    location.href = '/Admin/UsersIndex'
+                    swal({
+                        title: "Update Successful",
+                        type: "success",
+                        timer: 3000
+
+                    },
+                        function () {
+                            location.href = '/Admin/UsersIndex'
+                        });
                 }
                 else {
                     swal("Sửa thất bại")

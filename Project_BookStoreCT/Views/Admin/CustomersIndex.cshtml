@@ -117,14 +117,14 @@
             function (isConfirm) {
                 if (isConfirm) {
                     $.ajax({
-                        url: "/Admin/DeleteUsers",
+                        url: "/Admin/DeleteCus",
                         method: "POST",
                         dataType: "json",
                         data: {
-                            'uid': user_id
+                            'cid': cus_id
                         },
                     }).done(function (data) {
-                        if (data.mess_ == "1") {
+                        if (data.mess__ == "1") {
                             swal({
                                 title: "Đã xóa",
                                 text: "Bạn đã xóa thành công",
