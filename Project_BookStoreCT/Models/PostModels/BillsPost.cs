@@ -8,6 +8,7 @@ namespace Project_BookStoreCT.Models.PostModels
     public class BillsPost
     {
         public int Bill_ID { get; set; }
+        public int Customer_ID { get; set; }
         public string customerName { get; set; }
         public string address { get; set; }
         public string phoneNumber { get; set; }

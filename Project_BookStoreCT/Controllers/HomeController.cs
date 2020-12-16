@@ -355,6 +355,7 @@ namespace Project_BookStoreCT.Controllers
                     if (Convert.ToInt32(f["payment"]) == 1)
                     {
                         Bill bills = new Bill();
+                        bills.Customer_ID = SessionCheckingCustomes.customerID;
                         bills.customerName = f["txtKhachHang"];
                         bills.phoneNumber = f["txtSoDienThoai"];
                         bills.date_set = DateTime.Now;
@@ -415,7 +416,9 @@ namespace Project_BookStoreCT.Controllers
                     }
                     else
                     {
+
                         Bill bills = new Bill();
+                        bills.Customer_ID = SessionCheckingCustomes.customerID;
                         bills.customerName = f["txtKhachHang"];
                         bills.phoneNumber = f["txtSoDienThoai"];
                         bills.date_set = DateTime.Now;
@@ -439,15 +442,14 @@ namespace Project_BookStoreCT.Controllers
 
                         foreach (var item in (List<Cart_ViewModels>)Session["Cart"])
                         {
-                            int quantityExist = 0;
+                            int? quantityExist = 0;
                             var quantity = (from bo in db.Books where bo.Book_ID == item.book_id select new { bo.quantityExists }).ToList();
                             Book b = db.Books.Where(x => x.Book_ID == item.book_id).FirstOrDefault();
                             foreach (var sl in quantity)
                             {
-                                quantityExist = (int)(sl.quantityExists - item.number);
+                                quantityExist = (sl.quantityExists - item.number);
                             }
                             b.quantityExists = quantityExist;
-                            db.Books.Add(b);
                             db.SaveChanges();
                         }
                         return RedirectToAction("PaymentWithPaypal");

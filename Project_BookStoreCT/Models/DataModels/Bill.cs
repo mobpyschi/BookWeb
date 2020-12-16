@@ -21,6 +21,7 @@ namespace Project_BookStoreCT.Models.DataModels
         }
     
         public int Bill_ID { get; set; }
+        public Nullable<int> Customer_ID { get; set; }
         public Nullable<System.DateTime> date_set { get; set; }
         public string customerName { get; set; }
         public string customerAddress { get; set; }

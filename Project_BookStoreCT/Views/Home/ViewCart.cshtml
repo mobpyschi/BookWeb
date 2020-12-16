@@ -60,7 +60,7 @@
                             @if(Session["Cart"] != null)
                             {
                                 foreach (Cart_ViewModels cart in (List<Cart_ViewModels>)Session["Cart"])
-                                {<li><input type="button" onclick="updateCart(@cart.book_id,this)" value="Cập nhập giỏ hàng" /> </li> }
+                                {<li><input type="button" onclick="updateCart(@cart.book_id)" value="Cập nhập giỏ hàng" /> </li> }
                             }
                             
                             <li><a href="~/Home/Index">Tiếp tục mua hàng</a></li>

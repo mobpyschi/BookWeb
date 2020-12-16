@@ -243,5 +243,52 @@ namespace Project_BookStoreCT.Controllers
 
             }
         }
+        [HttpGet]
+        public ActionResult OrderHistoryCus(int ? cid)
+        {
+            using (DataContext db = new DataContext())
+            if(cid != null)
+            {
+                ViewBag.Bills = (from b in db.Bills where b.Customer_ID == cid select b).ToList();
+                return View();
+            }
+                else
+                {
+                    return PartialView("_Partial404NotFound");
+                }
+        }
+        [HttpPost]
+        public ActionResult OrderDetailsCus(int? bid)
+        {
+            using (DataContext db = new DataContext())
+            {
+                if (bid != null)
+                {
+                    var detailBill = (from d in db.DetailBills
+                                      join b in db.Books
+                                      on d.Book_ID equals b.Book_ID
+                                      join c in db.Categories
+                                      on b.category_id equals c.Category_ID
+                                      where d.Bill_ID == bid
+                                      select new { d.quantity, c.categoryName, b.price, b.bookName, b.image }).ToList();
+                    List<DetailBills_ViewModels> details = new List<DetailBills_ViewModels>();
+                    foreach (var d in detailBill)
+                    {
+                        DetailBills_ViewModels detail = new DetailBills_ViewModels();
+                        detail.bookName = d.bookName;
+                        detail.categoryName = d.categoryName;
+                        detail.image = d.image;
+                        detail.quantity = (int)d.quantity;
+                        detail.price = d.price;
+                        details.Add(detail);
+                    }
+                    return View(details);
+                }
+                else
+                {
+                    return PartialView("_Partial404NotFound");
+                }
+            }
+        }
     }
 }

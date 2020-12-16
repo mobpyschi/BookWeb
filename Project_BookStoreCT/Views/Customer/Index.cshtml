@@ -22,7 +22,15 @@ else
                             @foreach (CusIndex_ViewModels cus in Model)
                             {
                                 <a href="#" onclick="updateCus(@cus.cus_id,this)" class="btn btn-success">Cập nhật</a>
-                                <a  onclick="changePass(@cus.cus_id,this)" class="btn btn-danger">Đổi mật khẩu</a>
+                                <a onclick="changePass(@cus.cus_id,this)" class="btn btn-info">Đổi mật khẩu</a>
+                            }
+
+                        </div>
+                        <div class=" col-6 col-sm-12 col-md-12 col-lg-12 col-xl-12 mt-10">
+                            @foreach (CusIndex_ViewModels cus in Model)
+                            {
+                                <a href="#" style="width:20rem" onclick="historyCus(@cus.cus_id,this)" class="btn btn-info">Lịch sử mua hàng</a>
+                                
                             }
 
                         </div>
@@ -85,5 +93,8 @@ else
     }
     function changePass(cus_id) {
         location.href = './ChangePass?cid=' + cus_id;
+    }
+    function historyCus(cus_id) {
+        location.href = './OrderHistoryCus?cid=' + cus_id;
     }
 </script>

@@ -27,6 +27,7 @@
             <PropertyRef Name="Bill_ID" />
           </Key>
           <Property Name="Bill_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Customer_ID" Type="int" />
           <Property Name="date_set" Type="datetime" />
           <Property Name="customerName" Type="nvarchar" MaxLength="150" />
           <Property Name="customerAddress" Type="nvarchar" MaxLength="150" />
@@ -375,6 +376,7 @@
             <PropertyRef Name="Bill_ID" />
           </Key>
           <Property Name="Bill_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Customer_ID" Type="Int32" />
           <Property Name="date_set" Type="DateTime" Precision="3" />
           <Property Name="customerName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="customerAddress" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
@@ -740,6 +742,7 @@
             <EntityTypeMapping TypeName="BookshopModel.Bill">
               <MappingFragment StoreEntitySet="Bill">
                 <ScalarProperty Name="Bill_ID" ColumnName="Bill_ID" />
+                <ScalarProperty Name="Customer_ID" ColumnName="Customer_ID" />
                 <ScalarProperty Name="date_set" ColumnName="date_set" />
                 <ScalarProperty Name="customerName" ColumnName="customerName" />
                 <ScalarProperty Name="customerAddress" ColumnName="customerAddress" />

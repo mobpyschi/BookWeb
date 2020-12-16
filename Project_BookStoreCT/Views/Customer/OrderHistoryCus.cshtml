@@ -1,0 +1,79 @@
+﻿@using Project_BookStoreCT.Models.ServiceModels;
+
+@{
+    ViewBag.Title = "Lịch sử đặt hàng";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+<div class="coupon-area mb-70">
+
+</div>
+@if (SessionCheckingCustomes.customerID == null)
+{
+    @Html.Partial("_Partial404NotFound")
+}
+else
+{
+    <div class="cart-main-area mb-70">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="table-content table-responsive">
+                        <h3>Lịch sử đặt hàng</h3>
+                        <table id="dtBasicExample" class="table table-hover table-inverse table-responsive">
+                            <thead class="thead-inverse">
+                                <tr>
+                                    <th><b>Tên khách hàng</b></th>
+                                    <th><b>Địa chỉ</b></th>
+                                    <th><b>Số điện thoại</b></th>
+                                    <th><b>Ngày đặt hàng</b></th>
+                                    <th><b>Thanh toán</b></th>
+                                    <th><b>Trạng thái đơn hàng</b></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var b in ViewBag.Bills)
+                                {
+                                    <tr id="row_@b.Bill_ID">
+                                        <td>@b.customerName</td>
+                                        <td>@b.customerAddress</td>
+                                        <td>@b.phoneNumber</td>
+                                        <td>@b.date_set</td>
+
+                                        @if (b.payment_status == true)
+                                        {
+                                            <td>Đã thanh toán</td>
+                                        }
+                                        else
+                                        {
+                                            <td>Chưa thanh toán</td>
+                                        }
+                                        <td>
+                                            @if (b.delivered_status == true)
+                                            {
+                                                <b class="label label-success"><i class="fa fa-check"></i> Đã duyệt</b>
+                                            }
+                                            else
+                                            {
+                                                <b class="label label-danger"><i class="fa fa-times"></i> Chờ duyệt</b>
+                                            }
+                                        </td>
+                                        <td><a onclick="Detail(@b.Bill_ID)" style="cursor:pointer">Xem chi tiết</a></td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<script>
+    $(document).ready(function () {
+        $('#dtBasicExample').DataTable();
+    });
+    function Detail(bid) {
+        location.href = './OrderDetailsCus?bid=' + bid;
+    }
+</script>
